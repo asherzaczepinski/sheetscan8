@@ -51,7 +51,8 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
         pixel = img_array[input_y, x_index]
         if pixel != 255 and x_index != width - 1:
             black_count += 1
-            if difference_between_blacks >= difference_between_lines_for_line_drawing * 0.4 and difference_between_blacks < difference_between_lines_for_line_drawing:
+            print(difference_between_lines_for_line_drawing)
+            if difference_between_blacks >= difference_between_lines_for_line_drawing * 0.4 and difference_between_blacks < difference_between_lines_for_line_drawing * 1.5:
                 counter = 0
                 white_note = True
                 above = False
@@ -120,6 +121,8 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                         if right == -1:
                             white_note = False
                     if white_note:
+                        
+                        
                         past_temp_y_above = -1
                         past_temp_y_below = -1
                         #testing where it is here
@@ -173,9 +176,11 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     temp_y_below += 1  
 
                             if white_note and past_temp_y_below != -1:
+
                                 if past_temp_y_below - temp_y_below < 0:
                                     white_note = False         
 
+                            #problems for the white notes stem before here
                             if white_note:
                                 if temp_y_below >= max_below:
                                     max_below = temp_y_below
