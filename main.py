@@ -1,5 +1,9 @@
 #workingn on fixing up whole note white
+#then whole dashed white
+#is there a whole dashed black???
 
+#maybe we can refine line removal to check at the predicted locations how far up and down we should remove the line to!
+#this could be super helpful
 
 from PIL import Image, ImageDraw
 from pathlib import Path
