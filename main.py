@@ -1,3 +1,6 @@
+#workingn on fixing up whole note white
+
+
 from PIL import Image, ImageDraw
 from pathlib import Path
 import fitz  # PyMuPDF
@@ -51,7 +54,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
         pixel = img_array[input_y, x_index]
         if pixel != 255 and x_index != width - 1:
             black_count += 1
-            print(difference_between_lines_for_line_drawing)
             if difference_between_blacks >= difference_between_lines_for_line_drawing * 0.4 and difference_between_blacks < difference_between_lines_for_line_drawing * 1.5:
                 counter = 0
                 white_note = True
@@ -63,18 +65,21 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                 while True:
                     temp_pixel_above = img_array[input_y - counter, x_index - int(difference_between_blacks / 2)]
                     temp_pixel_below = img_array[input_y + counter, x_index - int(difference_between_blacks / 2)]
-                    if counter > difference_between_lines_for_line_drawing / 3:
+                    if counter > difference_between_lines_for_line_drawing * 3 / 4:
+                        #breaking around here
                         white_note = False
                         break
                     if temp_pixel_above != 255:
                         above = True
                     if temp_pixel_below != 255:
                         below = True
-                    if above and below and counter < difference_between_lines_for_line_drawing / 3:
+                    if above and below and counter < difference_between_lines_for_line_drawing * 3 / 4:
                         break
                     counter += 1
                 #this is going across and then up and down 
                 if white_note:
+                    #above here
+                    img_array[input_y: input_y + 50, x_index - round(difference_between_blacks / 2)] = 50
                     first = -1
                     middle = -1
                     start = x_index - difference_between_blacks
@@ -1167,7 +1172,7 @@ def open_pdf_into_input(pdf_path, input_folder, new_input):
         img.save(image_path2)
 
 # Example usage
-pdf_path = "input.pdf"
+pdf_path = "davidisstupid.pdf"
 input_folder = "input"
 new_input = 'new_input'
 
