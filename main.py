@@ -82,8 +82,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                     counter += 1
                 #this is going across and then up and down 
                 if white_note:
-                    #above here
-                    img_array[input_y: input_y + 50, x_index - round(difference_between_blacks / 2)] = 50
                     first = -1
                     middle = -1
                     start = x_index - difference_between_blacks
@@ -131,7 +129,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                             white_note = False
                     if white_note:
                         
-                        
                         past_temp_y_above = -1
                         past_temp_y_below = -1
                         #testing where it is here
@@ -161,9 +158,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                 temp_y_above -= 1   
                              
 
-                            if white_note and past_temp_y_above != -1:
-                                if past_temp_y_above - temp_y_above < 0:
-                                    white_note = False
+                            
                             #the reason for the step on some is bc of both input_y on the two things
                             if white_note:
                                 if temp_y_above <= max_above or max_above == -1:
@@ -184,12 +179,20 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         break
                                     temp_y_below += 1  
 
+
+                             
+                            #make a variable to track if the next 2 get ticked off... if so then we can make a new thing that tracks if it is a whole white note!
                             if white_note and past_temp_y_below != -1:
 
                                 if past_temp_y_below - temp_y_below < 0:
                                     white_note = False         
+                                    img_array[input_y: input_y + 50, x_index - round(difference_between_blacks / 2)] = 50
 
-                            #problems for the white notes stem before here
+                            if white_note and past_temp_y_above != -1:
+                                if past_temp_y_above - temp_y_above < 0:
+                                    white_note = False
+
+                            #we may need to put something else here for those whole notes like that
                             if white_note:
                                 if temp_y_below >= max_below:
                                     max_below = temp_y_below
@@ -212,8 +215,13 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     past_temp_y_above = temp_y_above
                                     past_temp_y_below = temp_y_below
                                 else:
+                                    
+
                                     white_note = False
                                     break
+
+
+                                
                         if white_note:
                             #little /5 cuz it is not all the way
                             if max_above > input_y - round(difference_between_lines / 5):
@@ -1045,6 +1053,7 @@ def extract_highlighted_lines_and_columns_from_image(image_path, threshold=2/3):
             all_whites_in_line = sorted(current_white_notes + new_white_notes, key=lambda note: note[0][0])
             all_dashed_whites_in_line = sorted(current_dashed_whites + new_dashed_whites, key=lambda note: note[0][0])
 
+            print(len(all_blacks_in_line), len(all_whites_in_line), len(all_dashed_whites_in_line))
             index = 0
 
             while index < len(all_blacks_in_line):
