@@ -1053,7 +1053,6 @@ def extract_highlighted_lines_and_columns_from_image(image_path, threshold=2/3):
             all_whites_in_line = sorted(current_white_notes + new_white_notes, key=lambda note: note[0][0])
             all_dashed_whites_in_line = sorted(current_dashed_whites + new_dashed_whites, key=lambda note: note[0][0])
 
-            print(len(all_blacks_in_line), len(all_whites_in_line), len(all_dashed_whites_in_line))
             index = 0
 
             while index < len(all_blacks_in_line):
