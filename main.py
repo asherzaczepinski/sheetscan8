@@ -194,37 +194,61 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         normal_white = False
 
                             #we may need to put something else here for those whole notes like that
-                            if normal_white:
-                                if temp_y_below >= max_below:
-                                    max_below = temp_y_below
-                                if new_x_index == start:
-                                    first = round((temp_y_above + temp_y_below) / 2)
-                                elif new_x_index == round((start + end) / 2):
-                                    middle = round((temp_y_above + temp_y_below) / 2)
-                                    if first - middle < int(difference_between_lines / 10):
+                            if white_note:
+                                if normal_white:
+                                    if temp_y_below >= max_below:
+                                        max_below = temp_y_below
+                                    if new_x_index == start:
+                                        first = round((temp_y_above + temp_y_below) / 2)
+                                    elif new_x_index == round((start + end) / 2):
+                                        middle = round((temp_y_above + temp_y_below) / 2)
+                                        if first - middle < int(difference_between_lines / 10):
+                                            white_note = False
+                                            break
+                                    elif new_x_index == end - 1:
+                                        ending = round((temp_y_above + temp_y_below) / 2)
+                                        if middle - ending < int(difference_between_lines / 10):
+                                            white_note = False
+                                            break        
+                                    if abs((past_temp_y_above - temp_y_above) - (temp_y_below - past_temp_y_below)) < difference_between_lines / 10 and past_temp_y_above - temp_y_above >= 0 and temp_y_below - past_temp_y_below >= 0:
+                                        past_temp_y_above = temp_y_above
+                                        past_temp_y_below = temp_y_below
+                                    elif past_temp_y_above == -1 or (abs(past_temp_y_above - temp_y_above) <= round(difference_between_lines / 5) and abs(past_temp_y_below - temp_y_below) <= round(difference_between_lines / 5)):
+                                        past_temp_y_above = temp_y_above
+                                        past_temp_y_below = temp_y_below
+                                    else:
                                         white_note = False
                                         break
-                                elif new_x_index == end - 1:
-                                    ending = round((temp_y_above + temp_y_below) / 2)
-                                    if middle - ending < int(difference_between_lines / 10):
-                                        white_note = False
-                                        break        
-                                if abs((past_temp_y_above - temp_y_above) - (temp_y_below - past_temp_y_below)) < difference_between_lines / 10 and past_temp_y_above - temp_y_above >= 0 and temp_y_below - past_temp_y_below >= 0:
-                                    past_temp_y_above = temp_y_above
-                                    past_temp_y_below = temp_y_below
-                                elif past_temp_y_above == -1 or (abs(past_temp_y_above - temp_y_above) <= round(difference_between_lines / 5) and abs(past_temp_y_below - temp_y_below) <= round(difference_between_lines / 5)):
-                                    past_temp_y_above = temp_y_above
-                                    past_temp_y_below = temp_y_below
                                 else:
-                                    white_note = False
-                                    break
-                            else:
-                                
-                                #white whole note undashed
-                                #the reason we have to include the normal white is bc the white_note could have been offsetted from earlier
-                                img_array[input_y: input_y + 50, new_x_index] = 50
+                                    
+                                    #white whole note undashed
+                                    #the reason we have to include the normal white is bc the white_note could have been offsetted from earlier
+                                    #going to do some other checks her these will make sure it is appropriate for the scenerio might user direciton change or not idk
+                                    #if it doesn't pass we make white note false
 
-                                print('wasup')
+                                    if white_note:
+                                        
+                                        #keep working it stops bc the white note become false just ooooh it breaks that's prob part of problem whenever it breaks it just stops it and maybe the white note become fals at stome point
+                                        img_array[input_y: input_y + 50, new_x_index] = 50
+                                        print('wasup')
+                                    #this white note shit is what is fucking it up run thru the logcic later
+                                    """if white_note:
+                                        if temp_y_below >= max_below:
+                                            max_below = temp_y_below      
+                                        if abs((past_temp_y_above - temp_y_above) - (temp_y_below - past_temp_y_below)) < difference_between_lines / 10 and past_temp_y_above - temp_y_above >= 0 and temp_y_below - past_temp_y_below >= 0:
+                                            past_temp_y_above = temp_y_above
+                                            past_temp_y_below = temp_y_below
+                                        elif past_temp_y_above == -1 or (abs(past_temp_y_above - temp_y_above) <= round(difference_between_lines / 5) and abs(past_temp_y_below - temp_y_below) <= round(difference_between_lines / 5)):
+                                            past_temp_y_above = temp_y_above
+                                            past_temp_y_below = temp_y_below
+                                        else:
+                                            white_note = False
+                                            img_array[input_y: input_y + 100, new_x_index] = 50
+                                            break
+                                        
+                                        #keep working it stops bc the white note become false just ooooh it breaks that's prob part of problem whenever it breaks it just stops it and maybe the white note become fals at stome point
+                                        img_array[input_y: input_y + 50, new_x_index] = 50
+                                        print('wasup')"""
 
 
                                 
