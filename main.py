@@ -226,6 +226,10 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
 
                                 print('wasup')
 
+                                #implement the if white note shit and then add in a check at the bottom like the above one in the above if
+                                #test to make sure thew if white note is'nt screwing things up i don't think it is
+                                
+
 
                                 
                         if white_note:
