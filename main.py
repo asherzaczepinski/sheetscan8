@@ -227,18 +227,21 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
 
                                     print('wasup')
 
-                                    #implement the if white note shit and then add in a check at the bottom like the above one in the above if
-                                    #test to make sure thew if white note is'nt screwing things up i don't think it is
+
+                                    #this is what changes it now figure out y it is so consistently the 5 wasups!
                                     #this fucked everything up:
-                                    """if abs((past_temp_y_above - temp_y_above) - (temp_y_below - past_temp_y_below)) < difference_between_lines / 10 and past_temp_y_above - temp_y_above >= 0 and temp_y_below - past_temp_y_below >= 0:
+                                    if abs((past_temp_y_above - temp_y_above) - (temp_y_below - past_temp_y_below)) < difference_between_lines / 10:
                                         past_temp_y_above = temp_y_above
                                         past_temp_y_below = temp_y_below
-                                    elif past_temp_y_above == -1 or (abs(past_temp_y_above - temp_y_above) <= round(difference_between_lines / 5) and abs(past_temp_y_below - temp_y_below) <= round(difference_between_lines / 5)):
+                                    elif past_temp_y_above == -1 or (abs(past_temp_y_above - temp_y_above) <= round(difference_between_lines / 2) and abs(past_temp_y_below - temp_y_below) <= round(difference_between_lines / 2)):
                                         past_temp_y_above = temp_y_above
                                         past_temp_y_below = temp_y_below
                                     else:
                                         white_note = False
-                                        break"""
+                                        break
+
+
+                                    #now that we have lighter logic implement something to make sure the sides r thick!
 
 
                                 
