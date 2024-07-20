@@ -134,7 +134,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                         #testing where it is here
                         start = x_index - difference_between_blacks + 1
                         end = x_index - 1
-
+                        normal_white = True
                         for new_x_index in range(start, end):
                             temp_pixel = img_array[input_y, new_x_index]
                             if temp_pixel != 255:
@@ -183,7 +183,14 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                              
                             #make a variable to track if the next 2 get ticked off... if so then we can make a new thing that tracks if it is a whole white note!
                             if white_note:
-                                normal_white = True
+                                
+
+
+
+                                #the issue is normal_white is resetting we have to define it further above
+                                #bc then on the one case it goes into here it fucks everything up 
+                                #w the first middle shit!!!!
+                                #haha alr just define normal_white earlier
                                 if past_temp_y_below != -1:
 
                                     if past_temp_y_below - temp_y_below < 0:
@@ -204,11 +211,13 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         middle = round((temp_y_above + temp_y_below) / 2)
                                         if first - middle < int(difference_between_lines / 10):
                                             white_note = False
+                                            print('goddamn')
                                             break
                                     elif new_x_index == end - 1:
                                         ending = round((temp_y_above + temp_y_below) / 2)
                                         if middle - ending < int(difference_between_lines / 10):
                                             white_note = False
+                                            print('fuck')
                                             break        
                                     if abs((past_temp_y_above - temp_y_above) - (temp_y_below - past_temp_y_below)) < difference_between_lines / 10 and past_temp_y_above - temp_y_above >= 0 and temp_y_below - past_temp_y_below >= 0:
                                         past_temp_y_above = temp_y_above
@@ -217,6 +226,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         past_temp_y_above = temp_y_above
                                         past_temp_y_below = temp_y_below
                                     else:
+                                        print('shit')
                                         white_note = False
                                         break
                                 else:
@@ -227,16 +237,19 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
 
                                     print('wasup')
 
-
                                     #this is what changes it now figure out y it is so consistently the 5 wasups!
                                     #this fucked everything up:
                                     if abs((past_temp_y_above - temp_y_above) - (temp_y_below - past_temp_y_below)) < difference_between_lines / 10:
+                                        print('this was accessed')
                                         past_temp_y_above = temp_y_above
                                         past_temp_y_below = temp_y_below
                                     elif past_temp_y_above == -1 or (abs(past_temp_y_above - temp_y_above) <= round(difference_between_lines / 2) and abs(past_temp_y_below - temp_y_below) <= round(difference_between_lines / 2)):
+                                        print('we got sigmad')
                                         past_temp_y_above = temp_y_above
                                         past_temp_y_below = temp_y_below
                                     else:
+
+                                        print('we got here!')
                                         white_note = False
                                         break
 
