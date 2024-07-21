@@ -228,6 +228,10 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
 
 
 
+                                    #fuck maybe we'll have to save the x_index where it last has the tempyabov redefined bc then we can figure out where to go under for the other stuff
+                                    #for the dashed white notes same logic for everything remember we changed up a lot of stuff so its gonna be a lot of work
+                                    #maybe even compare this commit with some old ones to figure out exactly what we changed
+
 
                                     #maybe use somehing from most_left idk
                                     #now that we have lighter logic implement something to make sure the sides r thick!
