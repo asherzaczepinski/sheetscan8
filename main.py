@@ -225,7 +225,13 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     else:
                                         white_note = False
                                         break
+
+
+
+
+                                    #maybe use somehing from most_left idk
                                     #now that we have lighter logic implement something to make sure the sides r thick!
+                                    #maybe like the sides have to be *1.5 of the max top or some shit idk
 
                         if white_note:
                             #little /5 cuz it is not all the way
