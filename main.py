@@ -237,11 +237,10 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                             if temp_pixel != 255:
                                                 started_mattering = temp_x
                                         else:
-                                            print('got to here')
                                             if temp_pixel == 255:
                                                 left_thickness = started_mattering - temp_x
                                                 break
-                                        temp_pixel -= 1
+                                        temp_x -= 1
                                     print(left_thickness)
 
 
