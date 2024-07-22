@@ -63,6 +63,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                 white_note = True
                 above = False
                 below = False
+                keep_going = True
                 max_above = -1
                 max_below = -1
                 #quick up and down check
@@ -169,7 +170,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     if continued:
                                         break
                                     if temp_y_below >= input_y + round(difference_between_lines_for_line_drawing * 3 / 4):
-                                        print('this brjhoek it@!')
                                         white_note = False
                                         break
                                     temp_pixel_below = img_array[temp_y_below, new_x_index]      
@@ -221,62 +221,50 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     else:
                                         white_note = False
                                         break
-                                    
-                                    middle = round((max_above + max_below) / 2)
-                                    left_thickness = 0
-                                    right_thickness = 0
-                                    #go left right from middle or some shit and go until it hits a white again after it starts
-                                    temp_x = x_index - round(difference_between_blacks / 2)
-                                    started_mattering = -1
-
-
-
-
-                                    #THERE IS SOME STUFF LIKE THIS WE RLY ONLY HAVE TO RUN THRU ONCE FOR EFFICIENCY PURPOSES
-                                    #WE DON'T NEED TO CHECK THIS ON EVERY FUCKING NEW PIXEL
-                                    #MIGHT MAKE IT MORE EFFICIENT
-                                    #FOR NOW KEEP WORKING
-                                    while True:
-                                        if temp_x < 0:
-                                            white_note = False
-                                            break
-                                        temp_pixel = img_array[middle, temp_x]
-                                        if started_mattering == -1:
-                                            if temp_pixel != 255:
-                                                started_mattering = temp_x
-                                        else:
-                                            if temp_pixel == 255:
-                                                left_thickness = started_mattering - temp_x
+                                    if keep_going:
+                                        middle = round((max_above + max_below) / 2)
+                                        left_thickness = 0
+                                        right_thickness = 0
+                                        #go left right from middle or some shit and go until it hits a white again after it starts
+                                        temp_x = x_index - round(difference_between_blacks / 2)
+                                        started_mattering = -1
+                                        while True:
+                                            if temp_x < 0:
+                                                white_note = False
                                                 break
-                                        temp_x -= 1
-                                    temp_x = x_index - round(difference_between_blacks / 2)
-                                    started_mattering = -1
-                                    while True:
-                                        if temp_x > width - 1:
-                                            white_note = False
-                                            break
-                                        temp_pixel = img_array[middle, temp_x]
-                                        if started_mattering == -1:
-                                            if temp_pixel != 255:
-                                                started_mattering = temp_x
-                                        else:
-                                            if temp_pixel == 255:
-                                                right_thickness = temp_x - started_mattering
+                                            temp_pixel = img_array[middle, temp_x]
+                                            if started_mattering == -1:
+                                                if temp_pixel != 255:
+                                                    started_mattering = temp_x
+                                            else:
+                                                if temp_pixel == 255:
+                                                    left_thickness = started_mattering - temp_x
+                                                    break
+                                            temp_x -= 1
+                                        temp_x = x_index - round(difference_between_blacks / 2)
+                                        started_mattering = -1
+                                        while True:
+                                            if temp_x > width - 1:
+                                                white_note = False
                                                 break
-                                        temp_x += 1
-                                    
-                                    if left_thickness < int(difference_between_lines / 4) or right_thickness < int(difference_between_lines / 4):
-                                        white_note = False
+                                            temp_pixel = img_array[middle, temp_x]
+                                            if started_mattering == -1:
+                                                if temp_pixel != 255:
+                                                    started_mattering = temp_x
+                                            else:
+                                                if temp_pixel == 255:
+                                                    right_thickness = temp_x - started_mattering
+                                                    break
+                                            temp_x += 1
+                                        
+                                        if left_thickness < int(difference_between_lines / 4) or right_thickness < int(difference_between_lines / 4):
+                                            white_note = False
+                                        else:
+                                            keep_going = False
 
 
                                     #for the dashed white notes same logic for everything remember we changed up a lot of stuff so its gonna be a lot of work
                                     #maybe even compare this commit with some old ones to figure out exactly what we changed
-
-
-                                    #maybe use somehing from most_left idk
-                                    #now that we have lighter logic implement something to make sure the sides r thick!
-                                    #MAKING SURE THE SIDES R THICK
-
                         if white_note:
                             #little /5 cuz it is not all the way
                             if max_above > input_y - round(difference_between_lines / 5):
