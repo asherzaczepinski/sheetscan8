@@ -264,7 +264,9 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                                 right_thickness = temp_x - started_mattering
                                                 break
                                         temp_x += 1
-                                    print(left_thickness, right_thickness)
+                                    
+                                    if left_thickness < int(difference_between_lines / 4) or right_thickness < int(difference_between_lines / 4):
+                                        white_note = False
 
 
                                     #for the dashed white notes same logic for everything remember we changed up a lot of stuff so its gonna be a lot of work
