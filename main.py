@@ -221,13 +221,21 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     else:
                                         white_note = False
                                         break
-
+                                    
                                     middle = round((max_above + max_below) / 2)
                                     left_thickness = 0
                                     right_thickness = 0
                                     #go left right from middle or some shit and go until it hits a white again after it starts
                                     temp_x = x_index - round(difference_between_blacks / 2)
                                     started_mattering = -1
+
+
+
+
+                                    #THERE IS SOME STUFF LIKE THIS WE RLY ONLY HAVE TO RUN THRU ONCE FOR EFFICIENCY PURPOSES
+                                    #WE DON'T NEED TO CHECK THIS ON EVERY FUCKING NEW PIXEL
+                                    #MIGHT MAKE IT MORE EFFICIENT
+                                    #FOR NOW KEEP WORKING
                                     while True:
                                         if temp_x < 0:
                                             white_note = False
@@ -241,7 +249,22 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                                 left_thickness = started_mattering - temp_x
                                                 break
                                         temp_x -= 1
-                                    print(left_thickness)
+                                    temp_x = x_index - round(difference_between_blacks / 2)
+                                    started_mattering = -1
+                                    while True:
+                                        if temp_x > width - 1:
+                                            white_note = False
+                                            break
+                                        temp_pixel = img_array[middle, temp_x]
+                                        if started_mattering == -1:
+                                            if temp_pixel != 255:
+                                                started_mattering = temp_x
+                                        else:
+                                            if temp_pixel == 255:
+                                                right_thickness = temp_x - started_mattering
+                                                break
+                                        temp_x += 1
+                                    print(left_thickness, right_thickness)
 
 
                                     #for the dashed white notes same logic for everything remember we changed up a lot of stuff so its gonna be a lot of work
