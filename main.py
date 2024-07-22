@@ -63,6 +63,8 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                 white_note = True
                 above = False
                 below = False
+                max_above_x_index = -1
+                max_below_x_index = -1
                 max_above = -1
                 max_below = -1
                 #quick up and down check
@@ -163,6 +165,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                             #the reason for the step on some is bc of both input_y on the two things
                             if white_note:
                                 if temp_y_above <= max_above or max_above == -1:
+                                    max_above_x_index = new_x_index
                                     max_above = temp_y_above
                                 while True:
                                     continued = True
@@ -192,6 +195,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                 #we may need to put something else here for those whole notes like that
                                 if normal_white:
                                     if temp_y_below >= max_below:
+                                        max_below_x_index = new_x_index
                                         max_below = temp_y_below
                                     if new_x_index == start:
                                         first = round((temp_y_above + temp_y_below) / 2)
