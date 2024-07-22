@@ -103,7 +103,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                         temp_y_below = input_y
                         above_flag = False
                         below_flag = False
-                        while temp_y_above > input_y - round(difference_between_lines_for_line_drawing / 2):
+                        while temp_y_above > input_y - round(difference_between_lines_for_line_drawing * 3 / 4):
                             temp_pixel_above = img_array[temp_y_above, new_x_index]                                        
                             if temp_pixel_above != 255:
                                 above_flag = True
@@ -112,7 +112,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                         if above_flag == False:
                             white_note = False
                         if white_note:
-                            while temp_y_below < input_y + round(difference_between_lines_for_line_drawing / 2):
+                            while temp_y_below < input_y + round(difference_between_lines_for_line_drawing * 3 / 4):
                                 temp_pixel_below = img_array[temp_y_below, new_x_index]                                            
                                 if temp_pixel_below != 255:
                                     below_flag = True
@@ -130,8 +130,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                             break
                         left_x -= 1
                     if left == -1:
-                        print('this broke it')
-                        img_array[middle: middle + 200, x_index - round(difference_between_blacks / 2): x_index - round(difference_between_blacks / 2) + 200] = 50
                         white_note = False
                     if white_note:
                         for right_x in range (x_index + 1, x_index + difference_between_blacks):
@@ -140,7 +138,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                 right = right_x - 1
                                 break
                         if right == -1:
-                            print('this happened')
                             white_note = False
                     if white_note:
                         
@@ -168,7 +165,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     break
                                 if temp_y_above <= input_y - round(difference_between_lines_for_line_drawing * 3 / 4):
                                     white_note = False
-                                    print('it broke here')
                                     break
                                 temp_pixel_above = img_array[temp_y_above, new_x_index]       
                                 if temp_pixel_above != 255:
@@ -188,7 +184,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         break
                                     if temp_y_below >= input_y + round(difference_between_lines_for_line_drawing * 3 / 4):
                                         white_note = False
-                                        print('it broke here')
                                         break
                                     temp_pixel_below = img_array[temp_y_below, new_x_index]      
                                     if temp_pixel_below != 255:
@@ -240,11 +235,8 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         break
                                     if keep_going:
                                         middle = round((max_above + max_below) / 2)
-                                        #img_array[middle: middle + 50, x_index - round(difference_between_blacks / 2)] = 50
-
                                         left_thickness = 0
                                         right_thickness = 0
-                                        #go left right from middle or some shit and go until it hits a white again after it starts
                                         temp_x = x_index - round(difference_between_blacks / 2)
                                         started_mattering = -1
                                         while True:
@@ -265,7 +257,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         started_mattering = -1
                                         while True:
                                             if temp_x > width - 1:
-                                                print('here')
                                                 white_note = False
                                                 break
                                             temp_pixel = img_array[middle, temp_x]
@@ -282,16 +273,10 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         if left_thickness < int(difference_between_lines / 4) or right_thickness < int(difference_between_lines / 4):
                                             white_note = False
                                             keep_going = False
-                                            #all the way right
-                                            print('not working')
-                                            print(temp_x)
-                                            print(middle)
-                                            #the problem is it isn't breaking here it becomes white note false somewhere else my beset guess is it is before thi whole thing
-                                            #img_array[middle: middle + 200, temp_x: temp_x + 200] = 50
                                         else:
                                             keep_going = False
 
-
+                                        #put in the changed direction once thingy!!!
                                     #for the dashed white notes same logic for everything remember we changed up a lot of stuff so its gonna be a lot of work
                                     #maybe even compare this commit with some old ones to figure out exactly what we changed
                                     #changed some shit w white note itself --- this was related to just the white note length shit so not applicableand then the obvious 
