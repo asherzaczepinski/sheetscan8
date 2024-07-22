@@ -275,7 +275,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                             keep_going = False
                                         else:
                                             keep_going = False
-
+                                        #first do the lines
                                         #put in the changed direction once thingy!!!
                                     #for the dashed white notes same logic for everything remember we changed up a lot of stuff so its gonna be a lot of work
                                     #maybe even compare this commit with some old ones to figure out exactly what we changed
