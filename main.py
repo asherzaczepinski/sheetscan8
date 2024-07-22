@@ -5,6 +5,9 @@
 #maybe we can refine line removal to check at the predicted locations how far up and down we should remove the line to!
 #this could be super helpful
 
+
+
+#figure out why hello is not working
 from PIL import Image, ImageDraw
 from pathlib import Path
 import fitz  # PyMuPDF
@@ -265,6 +268,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
 
                                     #for the dashed white notes same logic for everything remember we changed up a lot of stuff so its gonna be a lot of work
                                     #maybe even compare this commit with some old ones to figure out exactly what we changed
+                                    #changed some shit w white note itself --- this was related to just the white note length shit so not applicableand then the obvious 
                         if white_note:
                             #little /5 cuz it is not all the way
                             if max_above > input_y - round(difference_between_lines / 5):
@@ -1227,7 +1231,7 @@ def open_pdf_into_input(pdf_path, input_folder, new_input):
         img.save(image_path2)
 
 # Example usage
-pdf_path = "davidisstupid.pdf"
+pdf_path = "hello.pdf"
 input_folder = "input"
 new_input = 'new_input'
 
