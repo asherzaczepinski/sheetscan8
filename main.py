@@ -13,6 +13,9 @@
 #figure out why hello is not working
 #there r some issues w the new thickness thingy
 #once we calibrate this and the lines custom we can move on... for line customs see the 2/3 and the top and bottom
+
+
+#an easy change for the whole notes is changed direction once has to happen on both sides to counth
 from PIL import Image, ImageDraw
 from pathlib import Path
 import fitz  # PyMuPDF
@@ -127,6 +130,8 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                             break
                         left_x -= 1
                     if left == -1:
+                        print('this broke it')
+                        img_array[middle: middle + 200, x_index - round(difference_between_blacks / 2): x_index - round(difference_between_blacks / 2) + 200] = 50
                         white_note = False
                     if white_note:
                         for right_x in range (x_index + 1, x_index + difference_between_blacks):
@@ -135,6 +140,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                 right = right_x - 1
                                 break
                         if right == -1:
+                            print('this happened')
                             white_note = False
                     if white_note:
                         
@@ -145,6 +151,8 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                         end = x_index - 1
                         normal_white = True
                         for new_x_index in range(start, end):
+                            if not white_note:
+                                break
                             temp_pixel = img_array[input_y, new_x_index]
                             if temp_pixel != 255:
                                 continue
@@ -160,6 +168,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     break
                                 if temp_y_above <= input_y - round(difference_between_lines_for_line_drawing * 3 / 4):
                                     white_note = False
+                                    print('it broke here')
                                     break
                                 temp_pixel_above = img_array[temp_y_above, new_x_index]       
                                 if temp_pixel_above != 255:
@@ -179,6 +188,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         break
                                     if temp_y_below >= input_y + round(difference_between_lines_for_line_drawing * 3 / 4):
                                         white_note = False
+                                        print('it broke here')
                                         break
                                     temp_pixel_below = img_array[temp_y_below, new_x_index]      
                                     if temp_pixel_below != 255:
@@ -219,7 +229,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         white_note = False
                                         break
                                 else:
-                                    #figure out where it breaks
                                     if abs((past_temp_y_above - temp_y_above) - (temp_y_below - past_temp_y_below)) < difference_between_lines / 10:
                                         past_temp_y_above = temp_y_above
                                         past_temp_y_below = temp_y_below
@@ -240,6 +249,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         started_mattering = -1
                                         while True:
                                             if temp_x < 0:
+                                                print('here')
                                                 white_note = False
                                                 break
                                             temp_pixel = img_array[middle, temp_x]
@@ -255,9 +265,11 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         started_mattering = -1
                                         while True:
                                             if temp_x > width - 1:
+                                                print('here')
                                                 white_note = False
                                                 break
                                             temp_pixel = img_array[middle, temp_x]
+                                            #img_array[middle, temp_x] = 50
                                             if started_mattering == -1:
                                                 if temp_pixel != 255:
                                                     started_mattering = temp_x
@@ -269,7 +281,13 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         
                                         if left_thickness < int(difference_between_lines / 4) or right_thickness < int(difference_between_lines / 4):
                                             white_note = False
-                                            print(left_thickness, right_thickness)
+                                            keep_going = False
+                                            #all the way right
+                                            print('not working')
+                                            print(temp_x)
+                                            print(middle)
+                                            #the problem is it isn't breaking here it becomes white note false somewhere else my beset guess is it is before thi whole thing
+                                            #img_array[middle: middle + 200, temp_x: temp_x + 200] = 50
                                         else:
                                             keep_going = False
 
