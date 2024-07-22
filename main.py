@@ -2,12 +2,17 @@
 #then whole dashed white
 #is there a whole dashed black???
 
+
+
+#do this tmrw 
 #maybe we can refine line removal to check at the predicted locations how far up and down we should remove the line to!
 #this could be super helpful
 
 
 
 #figure out why hello is not working
+#there r some issues w the new thickness thingy
+#once we calibrate this and the lines custom we can move on... for line customs see the 2/3 and the top and bottom
 from PIL import Image, ImageDraw
 from pathlib import Path
 import fitz  # PyMuPDF
@@ -226,6 +231,8 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         break
                                     if keep_going:
                                         middle = round((max_above + max_below) / 2)
+                                        #img_array[middle: middle + 50, x_index - round(difference_between_blacks / 2)] = 50
+
                                         left_thickness = 0
                                         right_thickness = 0
                                         #go left right from middle or some shit and go until it hits a white again after it starts
@@ -262,6 +269,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         
                                         if left_thickness < int(difference_between_lines / 4) or right_thickness < int(difference_between_lines / 4):
                                             white_note = False
+                                            print(left_thickness, right_thickness)
                                         else:
                                             keep_going = False
 
