@@ -63,8 +63,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                 white_note = True
                 above = False
                 below = False
-                max_above_x_index = -1
-                max_below_x_index = -1
                 max_above = -1
                 max_below = -1
                 #quick up and down check
@@ -152,7 +150,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                 if continued:
                                     break
                                 if temp_y_above <= input_y - round(difference_between_lines_for_line_drawing * 3 / 4):
-                                    print('this broek it@!')
                                     white_note = False
                                     break
                                 temp_pixel_above = img_array[temp_y_above, new_x_index]       
@@ -160,12 +157,8 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     break
                                 temp_y_above -= 1   
                              
-
-                            
-                            #the reason for the step on some is bc of both input_y on the two things
                             if white_note:
                                 if temp_y_above <= max_above or max_above == -1:
-                                    max_above_x_index = new_x_index
                                     max_above = temp_y_above
                                 while True:
                                     continued = True
@@ -195,7 +188,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                 #we may need to put something else here for those whole notes like that
                                 if normal_white:
                                     if temp_y_below >= max_below:
-                                        max_below_x_index = new_x_index
                                         max_below = temp_y_below
                                     if new_x_index == start:
                                         first = round((temp_y_above + temp_y_below) / 2)
@@ -230,34 +222,36 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         white_note = False
                                         break
 
-                                    #above the note top thickness
-                                    #i think this logic is correct
-
-
-                                    #shit i forgot how max_above works
-                                    above_going_down = 0
-                                    temp_y = max_above 
+                                    middle = round((max_above + max_below) / 2)
+                                    left_thickness = 0
+                                    right_thickness = 0
+                                    #go left right from middle or some shit and go until it hits a white again after it starts
+                                    temp_x = x_index - round(difference_between_blacks / 2)
+                                    started_mattering = -1
                                     while True:
-                                        temp_pixel = img_array[temp_y, max_above_x_index]
-                                        print(temp_pixel)
-                                        if temp_pixel == 255:
+                                        if temp_x < 0:
+                                            white_note = False
                                             break
-                                        temp_y -= 1
-                                        above_going_down = max_above - temp_y
-                                    print(above_going_down)
-                                    #below the note bottom thickness
-                                    temp_y = max_below
-                                    down_going_above = 0
-                                    
+                                        temp_pixel = img_array[middle, temp_x]
+                                        if started_mattering == -1:
+                                            if temp_pixel != 255:
+                                                started_mattering = temp_x
+                                        else:
+                                            print('got to here')
+                                            if temp_pixel == 255:
+                                                left_thickness = started_mattering - temp_x
+                                                break
+                                        temp_pixel -= 1
+                                    print(left_thickness)
 
-                                    #fuck maybe we'll have to save the x_index where it last has the tempyabov redefined bc then we can figure out where to go under for the other stuff
+
                                     #for the dashed white notes same logic for everything remember we changed up a lot of stuff so its gonna be a lot of work
                                     #maybe even compare this commit with some old ones to figure out exactly what we changed
 
 
                                     #maybe use somehing from most_left idk
                                     #now that we have lighter logic implement something to make sure the sides r thick!
-                                    #maybe like the sides have to be *1.5 of the max top or some shit idk
+                                    #MAKING SURE THE SIDES R THICK
 
                         if white_note:
                             #little /5 cuz it is not all the way
