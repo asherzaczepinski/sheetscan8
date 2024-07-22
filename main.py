@@ -230,7 +230,25 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         white_note = False
                                         break
 
+                                    #above the note top thickness
+                                    #i think this logic is correct
 
+
+                                    #shit i forgot how max_above works
+                                    above_going_down = 0
+                                    temp_y = max_above 
+                                    while True:
+                                        temp_pixel = img_array[temp_y, max_above_x_index]
+                                        print(temp_pixel)
+                                        if temp_pixel == 255:
+                                            break
+                                        temp_y -= 1
+                                        above_going_down = max_above - temp_y
+                                    print(above_going_down)
+                                    #below the note bottom thickness
+                                    temp_y = max_below
+                                    down_going_above = 0
+                                    
 
                                     #fuck maybe we'll have to save the x_index where it last has the tempyabov redefined bc then we can figure out where to go under for the other stuff
                                     #for the dashed white notes same logic for everything remember we changed up a lot of stuff so its gonna be a lot of work
