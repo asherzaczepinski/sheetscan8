@@ -4,18 +4,15 @@
 
 
 
-#do this tmrw 
-#maybe we can refine line removal to check at the predicted locations how far up and down we should remove the line to!
-#this could be super helpful
+#I FIGURED OUT A SUPER SMART SOLUTION!!!!!
+#WE SHOULD RUN THE PROGRAM * 2
+#ONE TIME W THE LINES REMOVED AND ONE TIME WITHOUT
+#EVENTUALLY FOR THE LINES REMOVED ONE WE WILL ONLY CHECK ON THE INSIDE OF THE STAFF WHERE IT WOULD MATTEr
+#ANY EXTRA NOTES WE PUT IN THE FINAL THING!!!!!!!!!
+
+#i'm saying this bc we have the whole white notes rn maybe add a few more checks for just at end in terms of minimum height but that is all!
 
 
-
-#figure out why hello is not working
-#there r some issues w the new thickness thingy
-#once we calibrate this and the lines custom we can move on... for line customs see the 2/3 and the top and bottom
-
-
-#an easy change for the whole notes is changed direction once has to happen on both sides to counth
 from PIL import Image, ImageDraw
 from pathlib import Path
 import fitz  # PyMuPDF
@@ -1018,6 +1015,15 @@ def extract_highlighted_lines_and_columns_from_image(image_path, threshold=2/3):
         non_white_pixels = np.sum(row != 255)
         # Highlight the row if the count exceeds the threshold
         if non_white_pixels > (threshold * width):
+
+
+            #I FIGURED OUT A SUPER SMART SOLUTION!!!!!
+            #WE SHOULD RUN THE PROGRAM * 2
+            #ONE TIME W THE LINES REMOVED AND ONE TIME WITHOUT
+            #EVENTUALLY FOR THE LINES REMOVED ONE WE WILL ONLY CHECK ON THE INSIDE OF THE STAFF WHERE IT WOULD MATTEr
+            #ANY EXTRA NOTES WE PUT IN THE FINAL THING!!!!!!!!!
+
+
             img_array[row_index: row_index + 1, 0: width] = 255
             if start_line == -1:
                 start_line = row_index
