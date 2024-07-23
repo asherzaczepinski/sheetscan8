@@ -2,7 +2,16 @@
 #then whole dashed white
 #is there a whole dashed black???
 
+#we can always work on sharp and flat but rn i'm going to implement some software where you can hover over a note and it will tell you the fingering
+#this would be a first useful step for kids! --- it could also play what it shoudl sound like on your instrument : )
+#my business model would be 9.99 a month for teachers to give to there students... this would allow them to practice at home and be super helpful
+#it would progress the kids
 
+#---- i would then start selling bulk packages to districts
+#the idea would be the teachers search of enter in pdfs for each studnets thing
+#the students go onto website and use the class code for all there different music
+#it could be clarinet trombone you name it
+#it would put it in and let the students work w/ it
 
 #I FIGURED OUT A SUPER SMART SOLUTION!!!!!
 #WE SHOULD RUN THE PROGRAM * 2
