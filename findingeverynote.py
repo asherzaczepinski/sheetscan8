@@ -1,7 +1,31 @@
 #workingn on fixing up whole note white
 #then whole dashed white
+#is there a whole dashed black???
 
-#an easy change for the whole notes is changed direction once has to happen on both sides to counth
+#we can always work on sharp and flat but rn i'm going to implement some software where you can hover over a note and it will tell you the fingering
+#this would be a first useful step for kids! --- it could also play what it shoudl sound like on your instrument : )
+#my business model would be 9.99 a month for teachers to give to there students... this would allow them to practice at home and be super helpful
+#it would progress the kids
+
+#---- i would then start selling bulk packages to districts
+#the idea would be the teachers search of enter in pdfs for each studnets thing
+#the students go onto website and use the class code for all there different music
+#it could be clarinet trombone you name it
+#it would put it in and let the students work w/ it
+
+
+
+
+#control this w two seeperate runs and compare the resulting notes
+#I FIGURED OUT A SUPER SMART SOLUTION!!!!!
+#WE SHOULD RUN THE PROGRAM * 2
+#ONE TIME W THE LINES REMOVED AND ONE TIME WITHOUT
+#EVENTUALLY FOR THE LINES REMOVED ONE WE WILL ONLY CHECK ON THE INSIDE OF THE STAFF WHERE IT WOULD MATTEr
+#ANY EXTRA NOTES WE PUT IN THE FINAL THING!!!!!!!!!
+
+#i'm saying this bc we have the whole white notes rn maybe add a few more checks for just at end in terms of minimum height but that is all!
+
+
 from PIL import Image, ImageDraw
 from pathlib import Path
 import fitz  # PyMuPDF
@@ -264,6 +288,9 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
 
 
 
+                                        #implement the changed idifrection once!!!!
+                                                
+                                        #first do the lines
                                         #put in the changed direction once thingy!!!
                                     #for the dashed white notes same logic for everything remember we changed up a lot of stuff so its gonna be a lot of work
                                     #maybe even compare this commit with some old ones to figure out exactly what we changed
@@ -1006,6 +1033,15 @@ def extract_highlighted_lines_and_columns_from_image(image_path, threshold=2/3):
         non_white_pixels = np.sum(row != 255)
         # Highlight the row if the count exceeds the threshold
         if non_white_pixels > (threshold * width):
+
+
+            #I FIGURED OUT A SUPER SMART SOLUTION!!!!!
+            #WE SHOULD RUN THE PROGRAM * 2
+            #ONE TIME W THE LINES REMOVED AND ONE TIME WITHOUT
+            #EVENTUALLY FOR THE LINES REMOVED ONE WE WILL ONLY CHECK ON THE INSIDE OF THE STAFF WHERE IT WOULD MATTEr
+            #ANY EXTRA NOTES WE PUT IN THE FINAL THING!!!!!!!!!
+
+            #run one time w this and one widthou
             img_array[row_index: row_index + 1, 0: width] = 255
             if start_line == -1:
                 start_line = row_index
@@ -1046,14 +1082,6 @@ def extract_highlighted_lines_and_columns_from_image(image_path, threshold=2/3):
 
     temp_difference = -1
 
-
-
-
-     #this removal shit is a big issue
-    #i have somwhat of a solution
-    #what if we use orchestra line removal thingy
-    #then we compare just the right above and right below of that to see if it different
-    #then we just put those lines in!!!!!
     for row_index in range(len(lines)):
         row = lines[row_index]
         current_y = row[1]
@@ -1185,10 +1213,6 @@ def extract_highlighted_lines_and_columns_from_image(image_path, threshold=2/3):
     sorted_middles = sort_pairs(invisible_lines)
 
     notes = sort_notes(notes)
-
-
-
-   
     for row in notes:
         past_note = -1
         for note in row:

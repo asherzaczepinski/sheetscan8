@@ -13,6 +13,10 @@
 #it could be clarinet trombone you name it
 #it would put it in and let the students work w/ it
 
+
+
+
+#control this w two seeperate runs and compare the resulting notes
 #I FIGURED OUT A SUPER SMART SOLUTION!!!!!
 #WE SHOULD RUN THE PROGRAM * 2
 #ONE TIME W THE LINES REMOVED AND ONE TIME WITHOUT
@@ -1037,7 +1041,7 @@ def extract_highlighted_lines_and_columns_from_image(image_path, threshold=2/3):
             #EVENTUALLY FOR THE LINES REMOVED ONE WE WILL ONLY CHECK ON THE INSIDE OF THE STAFF WHERE IT WOULD MATTEr
             #ANY EXTRA NOTES WE PUT IN THE FINAL THING!!!!!!!!!
 
-
+            #run one time w this and one widthou
             img_array[row_index: row_index + 1, 0: width] = 255
             if start_line == -1:
                 start_line = row_index
