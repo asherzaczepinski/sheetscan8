@@ -1500,5 +1500,8 @@ for filename in os.listdir(input_folder):
 
         try:
             extract_highlighted_lines_and_columns_from_image_1(image_path)
+            #return the notes from both of these
+            #compare and anything extra we add in!
+            #basically merge the two idk if thats the call for it
         except IndexError as e:
             print(e) 
