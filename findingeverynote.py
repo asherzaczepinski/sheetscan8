@@ -1499,6 +1499,21 @@ def open_pdf_into_input(pdf_path, input_folder, new_input):
         img.save(image_path)
         img.save(image_path2)
 
+#use this to find the new shit
+
+def find_and_combine_extra(arr1, arr2):
+    # Convert each sub-array and inner lists to a tuple for hashability
+    set1 = {tuple(map(tuple, sub_array)) for sub_array in arr1}
+    set2 = {tuple(map(tuple, sub_array)) for sub_array in arr2}
+
+    # Find the elements in arr2 that are not in arr1
+    extra_in_arr2 = set2 - set1
+
+    # Convert the extra elements back to lists of lists and combine with arr1
+    result = arr1 + [list(map(list, item)) for item in extra_in_arr2]
+
+    return result
+
 # Example usage
 pdf_path = "hello.pdf"
 input_folder = "input"
@@ -1511,7 +1526,34 @@ for filename in os.listdir(input_folder):
         image_path = os.path.join(input_folder, filename)
 
         try:
-            extract_highlighted_lines_and_columns_from_image_1(image_path)
+
+            #narrow down the one w lines added back in to only check the areas w/ lines so no going above and shit do this after
+
+            #this first one is doing something that affects the second one ijdk what
+            #also rename the things to be more relevant
+            #the issue has to do w image path
+            print(extract_highlighted_lines_and_columns_from_image_1(image_path))
+            print(extract_highlighted_lines_and_columns_from_image_2(image_path))
+
+            notes = find_and_combine_extra(extract_highlighted_lines_and_columns_from_image_1(image_path), extract_highlighted_lines_and_columns_from_image_2(image_path))
+            
+            for row in notes:
+                for note in row:
+                    note = note[1]
+                    top_left = note[0]
+                    bottom_right = note[1]
+                    assigned_value = y_assigner(sorted_middles, top_left[1] + (round(difference_between_lines_for_line_drawing / 2) - 1))
+                    top_left[1] = assigned_value - (round(difference_between_lines_for_line_drawing / 2) - 1)
+                    bottom_right[1] = assigned_value + (round(difference_between_lines_for_line_drawing / 2) - 1)
+                    #right side
+                    img_array[top_left[1] - 5: bottom_right[1] + 5, bottom_right[0] + 5] = 0
+                    #left side
+                    img_array[top_left[1] - 5: bottom_right[1] + 5, top_left[0] - 5] = 0
+                    #top side
+                    img_array[top_left[1] - 5, top_left[0] - 5:bottom_right[0] + 5] = 0
+                    #bottom side
+                    img_array[bottom_right[1] + 5, top_left[0] - 5:bottom_right[0] + 5] = 0  
+
             #return the notes from both of these
             #compare and anything extra we add in!
             #basically merge the two idk if thats the call for it
