@@ -29,6 +29,9 @@
 
 #do tempo tapper along w/ it for any measures u select
 #do hover over notes anything u want
+#the app should have a built in tuner and metronome for the kids
+#it should be able to assign goal tempos for each teacher
+#have all the kids music online
 
 from PIL import Image, ImageDraw
 from pathlib import Path
