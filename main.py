@@ -26,6 +26,10 @@
 #i'm saying this bc we have the whole white notes rn maybe add a few more checks for just at end in terms of minimum height but that is all!
 
 
+
+#do tempo tapper along w/ it for any measures u select
+#do hover over notes anything u want
+
 from PIL import Image, ImageDraw
 from pathlib import Path
 import fitz  # PyMuPDF

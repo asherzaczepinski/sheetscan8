@@ -1213,6 +1213,7 @@ def extract_highlighted_lines_and_columns_from_image_1(image_path, threshold=2/3
     sorted_middles = sort_pairs(invisible_lines)
 
     notes = sort_notes(notes)
+    new_notes = []
     for row in notes:
         past_note = -1
         for note in row:
@@ -1220,7 +1221,8 @@ def extract_highlighted_lines_and_columns_from_image_1(image_path, threshold=2/3
             #sometimes they like encompass each other thats y abs like it could start before end later
             if past_note != -1 and abs(note[1][0] - past_note) < (difference_between_lines * 2 / 3):
                 continue
-            top_left = note[0]
+            new_notes.append(note)
+            """ top_left = note[0]
             bottom_right = note[1]
             assigned_value = y_assigner(sorted_middles, top_left[1] + (round(difference_between_lines_for_line_drawing / 2) - 1))
             top_left[1] = assigned_value - (round(difference_between_lines_for_line_drawing / 2) - 1)
@@ -1232,14 +1234,16 @@ def extract_highlighted_lines_and_columns_from_image_1(image_path, threshold=2/3
             #top side
             img_array[top_left[1] - 5, top_left[0] - 5:bottom_right[0] + 5] = 0
             #bottom side
-            img_array[bottom_right[1] + 5, top_left[0] - 5:bottom_right[0] + 5] = 0  
-            past_note = note[1][0]
+            img_array[bottom_right[1] + 5, top_left[0] - 5:bottom_right[0] + 5] = 0  """
+            past_note = note[1][0] 
 
     img = Image.fromarray(img_array)
     img.save(image_path)
 
     lines.append(image_path)
     all_rows.append(lines)
+
+    return new_notes
     
 def extract_highlighted_lines_and_columns_from_image_2(image_path, threshold=2/3):
 
@@ -1339,6 +1343,11 @@ def extract_highlighted_lines_and_columns_from_image_2(image_path, threshold=2/3
                 group.extend([[int((future_line + lines[row_index + add_row_index][1]) / 2), int((future_line + lines[row_index + add_row_index][1]) / 2) + round(line_height / 2)]])
                 if add_row_index != 3:
                     group.extend([[future_line, future_line + round(line_height / 2)]])
+
+
+
+    #need to figure out in here where to split it up!
+    #implement something by friday to fix this!
     notes = []
     for group in invisible_lines:
         for [current_loop_y, new_y] in group:
@@ -1435,6 +1444,7 @@ def extract_highlighted_lines_and_columns_from_image_2(image_path, threshold=2/3
     sorted_middles = sort_pairs(invisible_lines)
 
     notes = sort_notes(notes)
+    new_notes = []
     for row in notes:
         past_note = -1
         for note in row:
@@ -1442,7 +1452,8 @@ def extract_highlighted_lines_and_columns_from_image_2(image_path, threshold=2/3
             #sometimes they like encompass each other thats y abs like it could start before end later
             if past_note != -1 and abs(note[1][0] - past_note) < (difference_between_lines * 2 / 3):
                 continue
-            top_left = note[0]
+            new_notes.append(note)
+            """ top_left = note[0]
             bottom_right = note[1]
             assigned_value = y_assigner(sorted_middles, top_left[1] + (round(difference_between_lines_for_line_drawing / 2) - 1))
             top_left[1] = assigned_value - (round(difference_between_lines_for_line_drawing / 2) - 1)
@@ -1454,8 +1465,8 @@ def extract_highlighted_lines_and_columns_from_image_2(image_path, threshold=2/3
             #top side
             img_array[top_left[1] - 5, top_left[0] - 5:bottom_right[0] + 5] = 0
             #bottom side
-            img_array[bottom_right[1] + 5, top_left[0] - 5:bottom_right[0] + 5] = 0  
-            past_note = note[1][0]
+            img_array[bottom_right[1] + 5, top_left[0] - 5:bottom_right[0] + 5] = 0  """
+            past_note = note[1][0] 
 
     img = Image.fromarray(img_array)
     img.save(image_path)
@@ -1463,6 +1474,7 @@ def extract_highlighted_lines_and_columns_from_image_2(image_path, threshold=2/3
     lines.append(image_path)
     all_rows.append(lines)
 
+    return new_notes
 def open_pdf_into_input(pdf_path, input_folder, new_input):
     # Open the PDF file
     doc = fitz.open(pdf_path)
