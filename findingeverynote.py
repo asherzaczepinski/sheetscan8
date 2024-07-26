@@ -1009,7 +1009,7 @@ def y_assigner(y_array, y):
     else:
         return before
 
-def extract_highlighted_lines_and_columns_from_image_1(image_path, threshold=2/3):
+def extract_highlighted_lines_and_columns_from_image_took_out(image_path, threshold=2/3):
 
     # Load the image
     img = Image.open(image_path).convert("L")  # Convert to grayscale
@@ -1033,15 +1033,6 @@ def extract_highlighted_lines_and_columns_from_image_1(image_path, threshold=2/3
         non_white_pixels = np.sum(row != 255)
         # Highlight the row if the count exceeds the threshold
         if non_white_pixels > (threshold * width):
-
-
-            #I FIGURED OUT A SUPER SMART SOLUTION!!!!!
-            #WE SHOULD RUN THE PROGRAM * 2
-            #ONE TIME W THE LINES REMOVED AND ONE TIME WITHOUT
-            #EVENTUALLY FOR THE LINES REMOVED ONE WE WILL ONLY CHECK ON THE INSIDE OF THE STAFF WHERE IT WOULD MATTEr
-            #ANY EXTRA NOTES WE PUT IN THE FINAL THING!!!!!!!!!
-
-            #run one time w this and one widthou
             img_array[row_index: row_index + 1, 0: width] = 255
             if start_line == -1:
                 start_line = row_index
@@ -1222,19 +1213,6 @@ def extract_highlighted_lines_and_columns_from_image_1(image_path, threshold=2/3
             if past_note != -1 and abs(note[1][0] - past_note) < (difference_between_lines * 2 / 3):
                 continue
             new_notes.append(note)
-            """ top_left = note[0]
-            bottom_right = note[1]
-            assigned_value = y_assigner(sorted_middles, top_left[1] + (round(difference_between_lines_for_line_drawing / 2) - 1))
-            top_left[1] = assigned_value - (round(difference_between_lines_for_line_drawing / 2) - 1)
-            bottom_right[1] = assigned_value + (round(difference_between_lines_for_line_drawing / 2) - 1)
-            #right side
-            img_array[top_left[1] - 5: bottom_right[1] + 5, bottom_right[0] + 5] = 0
-            #left side
-            img_array[top_left[1] - 5: bottom_right[1] + 5, top_left[0] - 5] = 0
-            #top side
-            img_array[top_left[1] - 5, top_left[0] - 5:bottom_right[0] + 5] = 0
-            #bottom side
-            img_array[bottom_right[1] + 5, top_left[0] - 5:bottom_right[0] + 5] = 0  """
             past_note = note[1][0] 
 
     img = Image.fromarray(img_array)
@@ -1243,9 +1221,10 @@ def extract_highlighted_lines_and_columns_from_image_1(image_path, threshold=2/3
     lines.append(image_path)
     all_rows.append(lines)
 
-    return new_notes
+    #only return the extra stuff here bc this looks at everything so it feels better
+    return new_notes, sorted_middles, difference_between_lines_for_line_drawing
     
-def extract_highlighted_lines_and_columns_from_image_2(image_path, threshold=2/3):
+def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, threshold=2/3):
 
     # Load the image
     img = Image.open(image_path).convert("L")  # Convert to grayscale
@@ -1344,10 +1323,6 @@ def extract_highlighted_lines_and_columns_from_image_2(image_path, threshold=2/3
                 if add_row_index != 3:
                     group.extend([[future_line, future_line + round(line_height / 2)]])
 
-
-
-    #need to figure out in here where to split it up!
-    #implement something by friday to fix this!
     notes = []
     for group in invisible_lines:
         for [current_loop_y, new_y] in group:
@@ -1441,8 +1416,6 @@ def extract_highlighted_lines_and_columns_from_image_2(image_path, threshold=2/3
                             break
         past_notes = row
 
-    sorted_middles = sort_pairs(invisible_lines)
-
     notes = sort_notes(notes)
     new_notes = []
     for row in notes:
@@ -1453,19 +1426,6 @@ def extract_highlighted_lines_and_columns_from_image_2(image_path, threshold=2/3
             if past_note != -1 and abs(note[1][0] - past_note) < (difference_between_lines * 2 / 3):
                 continue
             new_notes.append(note)
-            """ top_left = note[0]
-            bottom_right = note[1]
-            assigned_value = y_assigner(sorted_middles, top_left[1] + (round(difference_between_lines_for_line_drawing / 2) - 1))
-            top_left[1] = assigned_value - (round(difference_between_lines_for_line_drawing / 2) - 1)
-            bottom_right[1] = assigned_value + (round(difference_between_lines_for_line_drawing / 2) - 1)
-            #right side
-            img_array[top_left[1] - 5: bottom_right[1] + 5, bottom_right[0] + 5] = 0
-            #left side
-            img_array[top_left[1] - 5: bottom_right[1] + 5, top_left[0] - 5] = 0
-            #top side
-            img_array[top_left[1] - 5, top_left[0] - 5:bottom_right[0] + 5] = 0
-            #bottom side
-            img_array[bottom_right[1] + 5, top_left[0] - 5:bottom_right[0] + 5] = 0  """
             past_note = note[1][0] 
 
     img = Image.fromarray(img_array)
@@ -1475,6 +1435,7 @@ def extract_highlighted_lines_and_columns_from_image_2(image_path, threshold=2/3
     all_rows.append(lines)
 
     return new_notes
+
 def open_pdf_into_input(pdf_path, input_folder, new_input):
     # Open the PDF file
     doc = fitz.open(pdf_path)
@@ -1519,43 +1480,50 @@ pdf_path = "hello.pdf"
 input_folder = "input"
 new_input = 'new_input'
 
-open_pdf_into_input(pdf_path, input_folder, new_input)
 
 for filename in os.listdir(input_folder):
     if filename.endswith(".png") or filename.endswith(".jpg"):
         image_path = os.path.join(input_folder, filename)
 
-        try:
+        # Load the image
+        img = Image.open(image_path).convert("L")  # Convert to grayscale
 
-            #narrow down the one w lines added back in to only check the areas w/ lines so no going above and shit do this after
+        # Convert the PIL Image to a NumPy array
+        img_array = np.array(img)
 
-            #this first one is doing something that affects the second one ijdk what
-            #also rename the things to be more relevant
-            #the issue has to do w image path
-            print(extract_highlighted_lines_and_columns_from_image_1(image_path))
-            print(extract_highlighted_lines_and_columns_from_image_2(image_path))
+        #narrow down the one w lines added back in to only check the areas w/ lines so no going above and shit do this after
 
-            notes = find_and_combine_extra(extract_highlighted_lines_and_columns_from_image_1(image_path), extract_highlighted_lines_and_columns_from_image_2(image_path))
-            
-            for row in notes:
-                for note in row:
-                    note = note[1]
-                    top_left = note[0]
-                    bottom_right = note[1]
-                    assigned_value = y_assigner(sorted_middles, top_left[1] + (round(difference_between_lines_for_line_drawing / 2) - 1))
-                    top_left[1] = assigned_value - (round(difference_between_lines_for_line_drawing / 2) - 1)
-                    bottom_right[1] = assigned_value + (round(difference_between_lines_for_line_drawing / 2) - 1)
-                    #right side
-                    img_array[top_left[1] - 5: bottom_right[1] + 5, bottom_right[0] + 5] = 0
-                    #left side
-                    img_array[top_left[1] - 5: bottom_right[1] + 5, top_left[0] - 5] = 0
-                    #top side
-                    img_array[top_left[1] - 5, top_left[0] - 5:bottom_right[0] + 5] = 0
-                    #bottom side
-                    img_array[bottom_right[1] + 5, top_left[0] - 5:bottom_right[0] + 5] = 0  
+        #this first one is doing something that affects the second one ijdk what
+        #also rename the things to be more relevant
+        open_pdf_into_input(pdf_path, input_folder, new_input)
 
-            #return the notes from both of these
-            #compare and anything extra we add in!
-            #basically merge the two idk if thats the call for it
-        except IndexError as e:
-            print(e) 
+        open_pdf_into_input(pdf_path, input_folder, new_input)
+
+        return_extract_highlighted_lines_and_columns_from_image_took_out, sorted_middles, difference_between_lines_for_line_drawing = extract_highlighted_lines_and_columns_from_image_took_out(image_path)
+
+        notes = find_and_combine_extra(return_extract_highlighted_lines_and_columns_from_image_took_out, extract_highlighted_lines_and_columns_from_image_kept_in(image_path))
+        
+        for row in notes:
+            for note in row:
+                note = note[1]
+                top_left = note[0]
+                bottom_right = note[1]
+                assigned_value = y_assigner(sorted_middles, top_left[1] + (round(difference_between_lines_for_line_drawing / 2) - 1))
+                top_left[1] = assigned_value - (round(difference_between_lines_for_line_drawing / 2) - 1)
+                bottom_right[1] = assigned_value + (round(difference_between_lines_for_line_drawing / 2) - 1)
+                #right side
+                img_array[top_left[1] - 5: bottom_right[1] + 5, bottom_right[0] + 5] = 0
+                #left side
+                img_array[top_left[1] - 5: bottom_right[1] + 5, top_left[0] - 5] = 0
+                #top side
+                img_array[top_left[1] - 5, top_left[0] - 5:bottom_right[0] + 5] = 0
+                #bottom side
+                img_array[bottom_right[1] + 5, top_left[0] - 5:bottom_right[0] + 5] = 0  
+
+        img = Image.fromarray(img_array)
+        img.save(image_path)
+        #return the notes from both of these
+        #compare and anything extra we add in!
+        #basically merge the two idk if thats the call for it
+    
+    #put back try except later
