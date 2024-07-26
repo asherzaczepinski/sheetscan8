@@ -1514,7 +1514,10 @@ for filename in os.listdir(input_folder):
         
         for row in notes:
             for note in row:
-                note = note[1]
+
+
+                #figure out what is happening i think it might have something to do w our combination but idk
+                print(note)
                 top_left = note[0]
                 bottom_right = note[1]
                 assigned_value = y_assigner(sorted_middles, top_left[1] + (round(difference_between_lines_for_line_drawing / 2) - 1))
