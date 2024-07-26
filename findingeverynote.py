@@ -1009,13 +1009,24 @@ def y_assigner(y_array, y):
     else:
         return before
 
+    
+#the issue is how it is processing it it is doing thE NON LINE ONES GODDAMN
 def extract_highlighted_lines_and_columns_from_image_took_out(image_path, threshold=2/3):
+    open_pdf_into_input(pdf_path, input_folder, new_input)
 
     # Load the image
     img = Image.open(image_path).convert("L")  # Convert to grayscale
 
     # Convert the PIL Image to a NumPy array
     img_array = np.array(img)
+
+    processed_image = Image.fromarray(img_array)
+
+
+    #TEWTING
+    output_path = 'processed_' + os.path.basename(image_path)
+    processed_image.save(output_path)
+
 
     # Get image width
     width = img_array.shape[1]
@@ -1054,7 +1065,7 @@ def extract_highlighted_lines_and_columns_from_image_took_out(image_path, thresh
     invisible_lines = []
 
     #Space it in middle for line identification
-
+    print(lines)
     difference_between_lines_for_line_drawing = lines[1][1] - lines[0][1] 
 
     #difference between lines
@@ -1225,6 +1236,7 @@ def extract_highlighted_lines_and_columns_from_image_took_out(image_path, thresh
     return new_notes, sorted_middles, difference_between_lines_for_line_drawing
     
 def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, threshold=2/3):
+    open_pdf_into_input(pdf_path, input_folder, new_input)
 
     # Load the image
     img = Image.open(image_path).convert("L")  # Convert to grayscale
@@ -1495,9 +1507,6 @@ for filename in os.listdir(input_folder):
 
         #this first one is doing something that affects the second one ijdk what
         #also rename the things to be more relevant
-        open_pdf_into_input(pdf_path, input_folder, new_input)
-
-        open_pdf_into_input(pdf_path, input_folder, new_input)
 
         return_extract_highlighted_lines_and_columns_from_image_took_out, sorted_middles, difference_between_lines_for_line_drawing = extract_highlighted_lines_and_columns_from_image_took_out(image_path)
 
