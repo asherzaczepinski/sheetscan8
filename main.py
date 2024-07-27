@@ -1502,6 +1502,9 @@ for filename in os.listdir(input_folder):
                 img_array[top_left[1] - 5, top_left[0] - 5:bottom_right[0] + 5] = 0
                 #bottom side
                 img_array[bottom_right[1] + 5, top_left[0] - 5:bottom_right[0] + 5] = 0  
+
+
+            #img array might be regenerating idk some stupid shit is happening right here
             img = Image.fromarray(img_array)
             img.save(new_image_path)
         except IndexError as e:
