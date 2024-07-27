@@ -1,5 +1,6 @@
 #it should also scan rythms with that orchestra thingy i used to have that could do that and like outline it then the students could record themselves clapping to it
 #once this was done i would try to sell it to the districts
+#make it so for every note it will go back and associate exactly the outline of it!
 
 #---- i would then start selling bulk packages to districts
 #the idea would be the teachers search of enter in pdfs for each studnets thing
@@ -1460,11 +1461,12 @@ def find_and_combine_extra(arr1, arr2):
     return result
 
 # Example usage
-pdf_path = "hello.pdf"
+pdf_path = "input.pdf"
 input_folder = "input"
 new_input = 'new_input'
 
 
+#to debug this we can try to see it proces both pages seperately from some old commits but literally it is showing it has everything there i think it is a probelm with combine
 for filename in os.listdir(input_folder):
     if filename.endswith(".png") or filename.endswith(".jpg"):
         try:
@@ -1479,6 +1481,7 @@ for filename in os.listdir(input_folder):
             return_extract_highlighted_lines_and_columns_from_image_took_out, sorted_middles, difference_between_lines_for_line_drawing = extract_highlighted_lines_and_columns_from_image_took_out(image_path)
 
             notes = find_and_combine_extra(return_extract_highlighted_lines_and_columns_from_image_took_out, extract_highlighted_lines_and_columns_from_image_kept_in(image_path))
+            print(image_path + str(notes))
             
             for note in notes:
                 #figure out what is happening i think it might have something to do w our combination but idk
@@ -1495,7 +1498,7 @@ for filename in os.listdir(input_folder):
                 img_array[top_left[1] - 5, top_left[0] - 5:bottom_right[0] + 5] = 0
                 #bottom side
                 img_array[bottom_right[1] + 5, top_left[0] - 5:bottom_right[0] + 5] = 0  
-
+                print(image_path)
             img = Image.fromarray(img_array)
             img.save(image_path)
         except IndexError as e:
