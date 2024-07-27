@@ -1022,12 +1022,6 @@ def extract_highlighted_lines_and_columns_from_image_took_out(image_path, thresh
 
     processed_image = Image.fromarray(img_array)
 
-
-    #TEWTING
-    output_path = 'processed_' + os.path.basename(image_path)
-    processed_image.save(output_path)
-
-
     # Get image width
     width = img_array.shape[1]
 
