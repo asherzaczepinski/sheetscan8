@@ -1020,8 +1020,6 @@ def extract_highlighted_lines_and_columns_from_image_took_out(image_path, thresh
     # Convert the PIL Image to a NumPy array
     img_array = np.array(img)
 
-    processed_image = Image.fromarray(img_array)
-
     # Get image width
     width = img_array.shape[1]
 
