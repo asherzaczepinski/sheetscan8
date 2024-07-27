@@ -1512,25 +1512,24 @@ for filename in os.listdir(input_folder):
 
         notes = find_and_combine_extra(return_extract_highlighted_lines_and_columns_from_image_took_out, extract_highlighted_lines_and_columns_from_image_kept_in(image_path))
         
-        for row in notes:
-            for note in row:
+        for note in notes:
 
 
-                #figure out what is happening i think it might have something to do w our combination but idk
-                print(note)
-                top_left = note[0]
-                bottom_right = note[1]
-                assigned_value = y_assigner(sorted_middles, top_left[1] + (round(difference_between_lines_for_line_drawing / 2) - 1))
-                top_left[1] = assigned_value - (round(difference_between_lines_for_line_drawing / 2) - 1)
-                bottom_right[1] = assigned_value + (round(difference_between_lines_for_line_drawing / 2) - 1)
-                #right side
-                img_array[top_left[1] - 5: bottom_right[1] + 5, bottom_right[0] + 5] = 0
-                #left side
-                img_array[top_left[1] - 5: bottom_right[1] + 5, top_left[0] - 5] = 0
-                #top side
-                img_array[top_left[1] - 5, top_left[0] - 5:bottom_right[0] + 5] = 0
-                #bottom side
-                img_array[bottom_right[1] + 5, top_left[0] - 5:bottom_right[0] + 5] = 0  
+            #figure out what is happening i think it might have something to do w our combination but idk
+            print(note)
+            top_left = note[0]
+            bottom_right = note[1]
+            assigned_value = y_assigner(sorted_middles, top_left[1] + (round(difference_between_lines_for_line_drawing / 2) - 1))
+            top_left[1] = assigned_value - (round(difference_between_lines_for_line_drawing / 2) - 1)
+            bottom_right[1] = assigned_value + (round(difference_between_lines_for_line_drawing / 2) - 1)
+            #right side
+            img_array[top_left[1] - 5: bottom_right[1] + 5, bottom_right[0] + 5] = 0
+            #left side
+            img_array[top_left[1] - 5: bottom_right[1] + 5, top_left[0] - 5] = 0
+            #top side
+            img_array[top_left[1] - 5, top_left[0] - 5:bottom_right[0] + 5] = 0
+            #bottom side
+            img_array[bottom_right[1] + 5, top_left[0] - 5:bottom_right[0] + 5] = 0  
 
         img = Image.fromarray(img_array)
         img.save(image_path)
