@@ -1474,8 +1474,9 @@ new_input = 'new_input'
 for filename in os.listdir(input_folder):
     if filename.endswith(".png") or filename.endswith(".jpg"):
         try:
-            image_path = os.path.join(input_folder, filename)
 
+            image_path = os.path.join(input_folder, filename)
+            new_image_path = os.path.join(new_input, filename)
             # Load the image
             img = Image.open(image_path).convert("L")  # Convert to grayscale
 
@@ -1502,6 +1503,6 @@ for filename in os.listdir(input_folder):
                 #bottom side
                 img_array[bottom_right[1] + 5, top_left[0] - 5:bottom_right[0] + 5] = 0  
             img = Image.fromarray(img_array)
-            img.save(image_path)
+            img.save(new_image_path)
         except IndexError as e:
             print(e) 
