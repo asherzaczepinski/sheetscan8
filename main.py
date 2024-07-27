@@ -1,30 +1,11 @@
-#workingn on fixing up whole note white
-#then whole dashed white
-#is there a whole dashed black???
-
-#we can always work on sharp and flat but rn i'm going to implement some software where you can hover over a note and it will tell you the fingering
-#this would be a first useful step for kids! --- it could also play what it shoudl sound like on your instrument : )
-#my business model would be 9.99 a month for teachers to give to there students... this would allow them to practice at home and be super helpful
-#it would progress the kids
+#it should also scan rythms with that orchestra thingy i used to have that could do that and like outline it then the students could record themselves clapping to it
+#once this was done i would try to sell it to the districts
 
 #---- i would then start selling bulk packages to districts
 #the idea would be the teachers search of enter in pdfs for each studnets thing
 #the students go onto website and use the class code for all there different music
 #it could be clarinet trombone you name it
 #it would put it in and let the students work w/ it
-
-
-
-
-#control this w two seeperate runs and compare the resulting notes
-#I FIGURED OUT A SUPER SMART SOLUTION!!!!!
-#WE SHOULD RUN THE PROGRAM * 2
-#ONE TIME W THE LINES REMOVED AND ONE TIME WITHOUT
-#EVENTUALLY FOR THE LINES REMOVED ONE WE WILL ONLY CHECK ON THE INSIDE OF THE STAFF WHERE IT WOULD MATTEr
-#ANY EXTRA NOTES WE PUT IN THE FINAL THING!!!!!!!!!
-
-#i'm saying this bc we have the whole white notes rn maybe add a few more checks for just at end in terms of minimum height but that is all!
-
 
 from PIL import Image, ImageDraw
 from pathlib import Path
