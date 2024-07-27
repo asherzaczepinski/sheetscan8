@@ -1466,6 +1466,10 @@ input_folder = "input"
 new_input = 'new_input'
 
 
+#OH I KNOW WHY IT IS ONLY WORKING FOR THE FIRST ONE
+#IT IS BC IT RESETS IT ON EVERY ONE
+#MAKE SURE IT SAVES THE RESULT TO NEW INPUT NOW!!!!!
+
 #to debug this we can try to see it proces both pages seperately from some old commits but literally it is showing it has everything there i think it is a probelm with combine
 for filename in os.listdir(input_folder):
     if filename.endswith(".png") or filename.endswith(".jpg"):
@@ -1481,7 +1485,6 @@ for filename in os.listdir(input_folder):
             return_extract_highlighted_lines_and_columns_from_image_took_out, sorted_middles, difference_between_lines_for_line_drawing = extract_highlighted_lines_and_columns_from_image_took_out(image_path)
 
             notes = find_and_combine_extra(return_extract_highlighted_lines_and_columns_from_image_took_out, extract_highlighted_lines_and_columns_from_image_kept_in(image_path))
-            print(image_path + str(notes))
             
             for note in notes:
                 #figure out what is happening i think it might have something to do w our combination but idk
@@ -1498,7 +1501,6 @@ for filename in os.listdir(input_folder):
                 img_array[top_left[1] - 5, top_left[0] - 5:bottom_right[0] + 5] = 0
                 #bottom side
                 img_array[bottom_right[1] + 5, top_left[0] - 5:bottom_right[0] + 5] = 0  
-                print(image_path)
             img = Image.fromarray(img_array)
             img.save(image_path)
         except IndexError as e:
