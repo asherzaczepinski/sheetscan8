@@ -15,6 +15,12 @@
 #maybe use pre-combined everything logic for testing!
 #for each note we'll store a max top max bottom max left max right return it w/ this along w what type of note it is
 #using this we can make it super accurately outlined for the user clicking the notes!
+
+#if to things r too close to each other on the same line choose the one on the right
+#do for the line added back only the current loop y in that middle range!
+#do something where we run it first w/ lines removed
+#then we make sure that any new notes aren't inside overlapping notes
+#then we see if the user clicks on something and it is double notes or what not we will 
 from PIL import Image, ImageDraw
 from pathlib import Path
 import fitz  # PyMuPDF
@@ -1281,21 +1287,7 @@ def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, thresho
     for row_index in range(len(lines)):
         row = lines[row_index]
         current_y = row[1]
-        if (row_index + 1) % 5 == 0:
-            if row_index == len(lines) - 1:
-                stopping_point = row[1]
-                while stopping_point < height and stopping_point <= row[1] + staff_white_range:
-                    stopping_point += round(temp_difference / 2)
-                stopping_point -= round(temp_difference / 2)
-            else:
-                stopping_point = (row[1] + lines[row_index + 1][1]) / 2
-            while current_y <= stopping_point:
-                group.extend([[current_y, current_y + round(line_height / 2)]])
-                current_y += round(temp_difference / 2)
-            invisible_lines.append(group)
-            group = []
-        #this is on the first line of a staff and goes up 
-        elif row_index % 5 == 0:
+        if row_index % 5 == 0:
             #Going to work on the removal of the every other line HERE!!!!
             temp_difference = lines[row_index + 1][1] - current_y
             if row_index == 0:
@@ -1305,9 +1297,6 @@ def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, thresho
                 stopping_point += round(temp_difference / 2)
             else:
                 stopping_point = (row[1] + lines[row_index - 1][1]) / 2
-            while current_y >= stopping_point:
-                group.extend([[current_y, current_y + round(line_height / 2)]])
-                current_y -= round(temp_difference / 2)
             for add_row_index in range(4): 
                 future_line = lines[row_index + add_row_index + 1][1] 
                 group.extend([[int((future_line + lines[row_index + add_row_index][1]) / 2), int((future_line + lines[row_index + add_row_index][1]) / 2) + round(line_height / 2)]])
