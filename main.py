@@ -1,6 +1,7 @@
 #it should also scan rythms with that orchestra thingy i used to have that could do that and like outline it then the students could record themselves clapping to it
 #once this was done i would try to sell it to the districts
 #make it so for every note it will go back and associate exactly the outline of it!
+#eventually put in alternate fingerings
 
 #---- i would then start selling bulk packages to districts
 #the idea would be the teachers search of enter in pdfs for each studnets thing
@@ -233,7 +234,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         started_mattering = -1
                                         while True:
                                             if temp_x < 0:
-                                                print('here')
                                                 white_note = False
                                                 break
                                             temp_pixel = img_array[middle, temp_x]
@@ -1485,8 +1485,17 @@ for filename in os.listdir(input_folder):
 
             return_extract_highlighted_lines_and_columns_from_image_took_out, sorted_middles, difference_between_lines_for_line_drawing = extract_highlighted_lines_and_columns_from_image_took_out(image_path)
 
+
+            #testing putitng this in here to see if the print works
+            #so it printed here goddamn
+            #extract_highlighted_lines_and_columns_from_image_kept_in(image_path)
+
+
+
             notes = find_and_combine_extra(return_extract_highlighted_lines_and_columns_from_image_took_out, extract_highlighted_lines_and_columns_from_image_kept_in(image_path))
             
+            if 'page_2' in filename:
+                print(len(notes))
             for note in notes:
                 #figure out what is happening i think it might have something to do w our combination but idk
                 top_left = note[0]
