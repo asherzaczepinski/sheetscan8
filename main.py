@@ -1442,8 +1442,9 @@ def open_pdf_into_input(pdf_path, input_folder, new_input):
         # Save the image to a file
         image_path = os.path.join(input_folder, f"page_{page_num + 1}.png")
         image_path2 = os.path.join(new_input, f"page_{page_num + 1}.png")
+        if not os.path.exists(os.path.dirname(image_path2)):
+            os.makedirs(os.path.dirname(image_path2))
         img.save(image_path)
-        img.save(image_path2)
 
 #use this to find the new shit
 
@@ -1465,11 +1466,6 @@ pdf_path = "input.pdf"
 input_folder = "input"
 new_input = 'new_input'
 
-
-#OH I KNOW WHY IT IS ONLY WORKING FOR THE FIRST ONE
-#IT IS BC IT RESETS IT ON EVERY ONE
-#MAKE SURE IT SAVES THE RESULT TO NEW INPUT NOW!!!!!
-
 #to debug this we can try to see it proces both pages seperately from some old commits but literally it is showing it has everything there i think it is a probelm with combine
 for filename in os.listdir(input_folder):
     if filename.endswith(".png") or filename.endswith(".jpg"):
@@ -1485,17 +1481,8 @@ for filename in os.listdir(input_folder):
 
             return_extract_highlighted_lines_and_columns_from_image_took_out, sorted_middles, difference_between_lines_for_line_drawing = extract_highlighted_lines_and_columns_from_image_took_out(image_path)
 
-
-            #testing putitng this in here to see if the print works
-            #so it printed here goddamn
-            #extract_highlighted_lines_and_columns_from_image_kept_in(image_path)
-
-
-
             notes = find_and_combine_extra(return_extract_highlighted_lines_and_columns_from_image_took_out, extract_highlighted_lines_and_columns_from_image_kept_in(image_path))
             
-            if 'page_2' in filename:
-                print(len(notes))
             for note in notes:
                 #figure out what is happening i think it might have something to do w our combination but idk
                 top_left = note[0]
@@ -1511,8 +1498,7 @@ for filename in os.listdir(input_folder):
                 img_array[top_left[1] - 5, top_left[0] - 5:bottom_right[0] + 5] = 0
                 #bottom side
                 img_array[bottom_right[1] + 5, top_left[0] - 5:bottom_right[0] + 5] = 0  
-
-
+                
             #img array might be regenerating idk some stupid shit is happening right here
             img = Image.fromarray(img_array)
             img.save(new_image_path)
