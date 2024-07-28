@@ -9,6 +9,9 @@
 #it could be clarinet trombone you name it
 #it would put it in and let the students work w/ it
 
+#maybe use pre-combined everything logic for testing!
+#for each note we'll store a max top max bottom max left max right return it w/ this along w what type of note it is
+#using this we can make it super accurately outlined for the user clicking the notes!
 from PIL import Image, ImageDraw
 from pathlib import Path
 import fitz  # PyMuPDF
