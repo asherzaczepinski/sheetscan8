@@ -1281,6 +1281,41 @@ def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, thresho
     
     temp_difference = -1
 
+    """for row_index in range(len(lines)):
+        row = lines[row_index]
+        current_y = row[1]
+        if (row_index + 1) % 5 == 0:
+            if row_index == len(lines) - 1:
+                stopping_point = row[1]
+                while stopping_point < height and stopping_point <= row[1] + staff_white_range:
+                    stopping_point += round(temp_difference / 2)
+                stopping_point -= round(temp_difference / 2)
+            else:
+                stopping_point = (row[1] + lines[row_index + 1][1]) / 2
+            while current_y <= stopping_point:
+                group.extend([[current_y, current_y + round(line_height / 2)]])
+                current_y += round(temp_difference / 2)
+            invisible_lines.append(group)
+            group = []
+        #this is on the first line of a staff and goes up 
+        elif row_index % 5 == 0:
+            #Going to work on the removal of the every other line HERE!!!!
+            temp_difference = lines[row_index + 1][1] - current_y
+            if row_index == 0:
+                stopping_point = row[1] 
+                while stopping_point > 0 and stopping_point >= row[1] - staff_white_range:
+                    stopping_point -= round(temp_difference / 2)
+                stopping_point += round(temp_difference / 2)
+            else:
+                stopping_point = (row[1] + lines[row_index - 1][1]) / 2
+            while current_y >= stopping_point:
+                group.extend([[current_y, current_y + round(line_height / 2)]])
+                current_y -= round(temp_difference / 2)
+            for add_row_index in range(4): 
+                future_line = lines[row_index + add_row_index + 1][1] 
+                group.extend([[int((future_line + lines[row_index + add_row_index][1]) / 2), int((future_line + lines[row_index + add_row_index][1]) / 2) + round(line_height / 2)]])
+                if add_row_index != 3:
+                    group.extend([[future_line, future_line + round(line_height / 2)]])"""
     for row_index in range(len(lines)):
         row = lines[row_index]
         current_y = row[1]
@@ -1299,12 +1334,11 @@ def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, thresho
                 group.extend([[int((future_line + lines[row_index + add_row_index][1]) / 2), int((future_line + lines[row_index + add_row_index][1]) / 2) + round(line_height / 2)]])
                 if add_row_index != 3:
                     group.extend([[future_line, future_line + round(line_height / 2)]])
-
+            invisible_lines.append(group)
+            group = []
     notes = []
     for group in invisible_lines:
-        #shit this is the issue it's no t doing any os this???
-        
-        print('were in here')
+
         for [current_loop_y, new_y] in group:
             #i think it's not going all the way
             row_notes = []
@@ -1382,7 +1416,6 @@ def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, thresho
     past_notes = []
     
     for index, row in enumerate(notes):
-        print('found a note')
         if index != 0:
             for index2, note in enumerate(row):
                 note = note[1]
@@ -1476,11 +1509,10 @@ for filename in os.listdir(input_folder):
             # Convert the PIL Image to a NumPy array
             img_array = np.array(img)
 
-            _, sorted_middles, difference_between_lines_for_line_drawing = extract_highlighted_lines_and_columns_from_image_took_out(image_path)
+            return_extract_highlighted_lines_and_columns_from_image_took_out, sorted_middles, difference_between_lines_for_line_drawing = extract_highlighted_lines_and_columns_from_image_took_out(image_path)
 
-            #debugging here
-            notes = extract_highlighted_lines_and_columns_from_image_kept_in(image_path)
-            print(len(extract_highlighted_lines_and_columns_from_image_kept_in(image_path)))
+            notes = find_and_combine_extra(return_extract_highlighted_lines_and_columns_from_image_took_out, extract_highlighted_lines_and_columns_from_image_kept_in(image_path))
+            
             for note in notes:
                 #figure out what is happening i think it might have something to do w our combination but idk
                 top_left = note[0]
