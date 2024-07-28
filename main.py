@@ -97,6 +97,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                     if above and below and counter < difference_between_lines_for_line_drawing * 3 / 4:
                         break
                     counter += 1
+                
                 #this is going across and then up and down 
                 if white_note:
                     first = -1
@@ -124,7 +125,37 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     break
                                 temp_y_below += 1
                             if below_flag == False:
-                                white_note = False             
+                                white_note = False          
+
+                    #need to now go up and down then across
+                    if white_note:
+                        for new_y_index in range(input_y - round(difference_between_lines_for_line_drawing / 2), input_y + round(difference_between_lines_for_line_drawing / 2)):
+                            temp_x_right = x_index - int(difference_between_blacks / 2) + 1
+                            temp_x_left = x_index - int(difference_between_blacks / 2) - 1
+                            right_flag = False
+                            left_flag = False
+                            while temp_x_left > x_index - difference_between_blacks * 2:
+                                temp_pixel_left = img_array[new_y_index, temp_x_left]
+                                if temp_pixel_left != 255:
+                                    left_flag = True
+                                    break
+                                temp_x_left -= 1
+                            if left_flag == False:
+                                white_note = False
+                            if white_note:
+                                while temp_x_right < x_index + difference_between_blacks:
+                                    temp_pixel_right = img_array[new_y_index, temp_x_right]
+                                    if temp_pixel_right != 255:
+                                        right_flag = True
+                                        break
+                                    temp_x_right -= 1
+                                if right_flag == False:
+                                    white_note = False
+
+
+
+
+                    #this is just seeing the outer boundaries not that deep
                     left = -1
                     right = -1
                     left_x = x_index - difference_between_blacks - 1
@@ -144,6 +175,8 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                 break
                         if right == -1:
                             white_note = False
+
+
                     if white_note:
                         
                         past_temp_y_above = -1
@@ -1005,7 +1038,7 @@ def y_assigner(y_array, y):
     
 #implement something on all white notes to check that it gets closed off at the right points all around the notes!!!!
     
-    
+
 #the issue is how it is processing it it is doing thE NON LINE ONES GODDAMN
 def extract_highlighted_lines_and_columns_from_image_took_out(image_path, threshold=2/3):
     open_pdf_into_input(pdf_path, input_folder, new_input)
