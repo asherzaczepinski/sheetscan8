@@ -153,9 +153,12 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     white_note = False
 
 
+                    #lets do something to find the truly outermost boundaries by doing this type of check i guess at the bottom left and right
+                    #this way we can see if something is not big enough
+                    #then it solves a fuck ton of white note problems!                
+                    
 
-
-                    #this is just seeing the outer boundaries not that deep
+                    #this is just seeing the left and right at input y
                     left = -1
                     right = -1
                     left_x = x_index - difference_between_blacks - 1
