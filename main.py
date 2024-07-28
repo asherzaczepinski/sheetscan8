@@ -1003,6 +1003,9 @@ def y_assigner(y_array, y):
         return before
 
     
+#implement something on all white notes to check that it gets closed off at the right points all around the notes!!!!
+    
+    
 #the issue is how it is processing it it is doing thE NON LINE ONES GODDAMN
 def extract_highlighted_lines_and_columns_from_image_took_out(image_path, threshold=2/3):
     open_pdf_into_input(pdf_path, input_folder, new_input)
@@ -1281,41 +1284,6 @@ def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, thresho
     
     temp_difference = -1
 
-    """for row_index in range(len(lines)):
-        row = lines[row_index]
-        current_y = row[1]
-        if (row_index + 1) % 5 == 0:
-            if row_index == len(lines) - 1:
-                stopping_point = row[1]
-                while stopping_point < height and stopping_point <= row[1] + staff_white_range:
-                    stopping_point += round(temp_difference / 2)
-                stopping_point -= round(temp_difference / 2)
-            else:
-                stopping_point = (row[1] + lines[row_index + 1][1]) / 2
-            while current_y <= stopping_point:
-                group.extend([[current_y, current_y + round(line_height / 2)]])
-                current_y += round(temp_difference / 2)
-            invisible_lines.append(group)
-            group = []
-        #this is on the first line of a staff and goes up 
-        elif row_index % 5 == 0:
-            #Going to work on the removal of the every other line HERE!!!!
-            temp_difference = lines[row_index + 1][1] - current_y
-            if row_index == 0:
-                stopping_point = row[1] 
-                while stopping_point > 0 and stopping_point >= row[1] - staff_white_range:
-                    stopping_point -= round(temp_difference / 2)
-                stopping_point += round(temp_difference / 2)
-            else:
-                stopping_point = (row[1] + lines[row_index - 1][1]) / 2
-            while current_y >= stopping_point:
-                group.extend([[current_y, current_y + round(line_height / 2)]])
-                current_y -= round(temp_difference / 2)
-            for add_row_index in range(4): 
-                future_line = lines[row_index + add_row_index + 1][1] 
-                group.extend([[int((future_line + lines[row_index + add_row_index][1]) / 2), int((future_line + lines[row_index + add_row_index][1]) / 2) + round(line_height / 2)]])
-                if add_row_index != 3:
-                    group.extend([[future_line, future_line + round(line_height / 2)]])"""
     for row_index in range(len(lines)):
         row = lines[row_index]
         current_y = row[1]
@@ -1492,7 +1460,7 @@ def find_and_combine_extra(arr1, arr2):
     return result
 
 # Example usage
-pdf_path = "hello.pdf"
+pdf_path = "input.pdf"
 input_folder = "input"
 new_input = 'new_input'
 
