@@ -264,7 +264,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                                 white_note = False
                                                 break
                                             temp_pixel = img_array[middle, temp_x]
-                                            #img_array[middle, temp_x] = 50
                                             if started_mattering == -1:
                                                 if temp_pixel != 255:
                                                     started_mattering = temp_x
@@ -1279,7 +1278,7 @@ def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, thresho
     staff_white_range = (lines[len(lines) - 5][1] - lines[len(lines) - 6][1]) / 2 
     
     group = []
-
+    
     temp_difference = -1
 
     for row_index in range(len(lines)):
@@ -1303,9 +1302,11 @@ def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, thresho
 
     notes = []
     for group in invisible_lines:
+        #shit this is the issue it's no t doing any os this???
+        
+        print('were in here')
         for [current_loop_y, new_y] in group:
             #i think it's not going all the way
-            img_array[current_y: current_loop_y + 5, 0: width] = 50
             row_notes = []
             # Process the lines and get the notes
             current_dashed_whites, current_black_notes, current_white_notes = process_line(
@@ -1381,6 +1382,7 @@ def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, thresho
     past_notes = []
     
     for index, row in enumerate(notes):
+        print('found a note')
         if index != 0:
             for index2, note in enumerate(row):
                 note = note[1]
@@ -1474,10 +1476,11 @@ for filename in os.listdir(input_folder):
             # Convert the PIL Image to a NumPy array
             img_array = np.array(img)
 
-            return_extract_highlighted_lines_and_columns_from_image_took_out, sorted_middles, difference_between_lines_for_line_drawing = extract_highlighted_lines_and_columns_from_image_took_out(image_path)
+            _, sorted_middles, difference_between_lines_for_line_drawing = extract_highlighted_lines_and_columns_from_image_took_out(image_path)
 
-            notes = find_and_combine_extra(return_extract_highlighted_lines_and_columns_from_image_took_out, extract_highlighted_lines_and_columns_from_image_kept_in(image_path))
-            
+            #debugging here
+            notes = extract_highlighted_lines_and_columns_from_image_kept_in(image_path)
+            print(len(extract_highlighted_lines_and_columns_from_image_kept_in(image_path)))
             for note in notes:
                 #figure out what is happening i think it might have something to do w our combination but idk
                 top_left = note[0]
