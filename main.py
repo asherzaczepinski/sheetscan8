@@ -16,10 +16,8 @@
 #for each note we'll store a max top max bottom max left max right return it w/ this along w what type of note it is
 #using this we can make it super accurately outlined for the user clicking the notes!
 
-
-
-
 #if to things r too close to each other on the same line choose the one on the right
+#do for the line added back only the current loop y in that middle range!
 #do something where we run it first w/ lines removed
 #then we make sure that any new notes aren't inside overlapping notes
 #then we see if the user clicks on something and it is double notes or what not we will 
@@ -240,10 +238,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     else:
                                         white_note = False
                                         break
-
-                                    
-
-                                    #need to improve this logic and dashed white and then we're done w this shit cuz this is what is giving us false positives
                                     if keep_going:
                                         middle = round((max_above + max_below) / 2)
                                         left_thickness = 0
@@ -297,10 +291,10 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     #changed some shit w white note itself --- this was related to just the white note length shit so not applicableand then the obvious 
                         if white_note:
                             #little /5 cuz it is not all the way
-                            if max_above > input_y - round(difference_between_lines / 5) or max_above < input_y - round(difference_between_lines * 3/5):
+                            if max_above > input_y - round(difference_between_lines / 5):
                                 white_note = False
                             if white_note:
-                                if max_below < input_y + round(difference_between_lines / 5) or max_below > input_y + round(difference_between_lines * 3/5):
+                                if max_below < input_y + round(difference_between_lines / 5):
                                     white_note = False
                             #overall height check
                             if white_note:
@@ -1238,8 +1232,6 @@ def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, thresho
     # Get image width
     width = img_array.shape[1]
 
-    height = img_array.shape[0]
-
     # This will hold the lines found in the image
     lines = []
 
@@ -1312,6 +1304,8 @@ def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, thresho
     notes = []
     for group in invisible_lines:
         for [current_loop_y, new_y] in group:
+            #i think it's not going all the way
+            img_array[current_y: current_loop_y + 5, 0: width] = 50
             row_notes = []
             # Process the lines and get the notes
             current_dashed_whites, current_black_notes, current_white_notes = process_line(
@@ -1463,7 +1457,7 @@ def find_and_combine_extra(arr1, arr2):
     return result
 
 # Example usage
-pdf_path = "input.pdf"
+pdf_path = "hello.pdf"
 input_folder = "input"
 new_input = 'new_input'
 
