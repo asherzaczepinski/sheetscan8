@@ -16,8 +16,10 @@
 #for each note we'll store a max top max bottom max left max right return it w/ this along w what type of note it is
 #using this we can make it super accurately outlined for the user clicking the notes!
 
+
+
+
 #if to things r too close to each other on the same line choose the one on the right
-#do for the line added back only the current loop y in that middle range!
 #do something where we run it first w/ lines removed
 #then we make sure that any new notes aren't inside overlapping notes
 #then we see if the user clicks on something and it is double notes or what not we will 
@@ -238,6 +240,10 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     else:
                                         white_note = False
                                         break
+
+                                    
+
+                                    #need to improve this logic and dashed white and then we're done w this shit cuz this is what is giving us false positives
                                     if keep_going:
                                         middle = round((max_above + max_below) / 2)
                                         left_thickness = 0
@@ -291,10 +297,10 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     #changed some shit w white note itself --- this was related to just the white note length shit so not applicableand then the obvious 
                         if white_note:
                             #little /5 cuz it is not all the way
-                            if max_above > input_y - round(difference_between_lines / 5):
+                            if max_above > input_y - round(difference_between_lines / 5) or max_above < input_y - round(difference_between_lines * 3/5):
                                 white_note = False
                             if white_note:
-                                if max_below < input_y + round(difference_between_lines / 5):
+                                if max_below < input_y + round(difference_between_lines / 5) or max_below > input_y + round(difference_between_lines * 3/5):
                                     white_note = False
                             #overall height check
                             if white_note:
