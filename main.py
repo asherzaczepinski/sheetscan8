@@ -10,6 +10,7 @@
 #it would put it in and let the students work w/ it
 #read up: https://github.com/AbdallahHemdan/Orchestra
 #don't need full outline lit just need its results!
+#dev the spacebar tapping interface
 
 #maybe use pre-combined everything logic for testing!
 #for each note we'll store a max top max bottom max left max right return it w/ this along w what type of note it is
