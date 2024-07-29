@@ -156,15 +156,26 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                     #lets do something to find the truly outermost boundaries by doing this type of check i guess at the bottom left and right
                     #this way we can see if something is not big enough
                     #then it solves a fuck ton of white note problems!                
-                    
+                    #also put in the big y loop thingy here
 
-                    #this is just seeing the left and right at input y
                     left = -1
                     right = -1
                     left_x = x_index - difference_between_blacks - 1
                     while left_x > x_index - difference_between_blacks - 1 - difference_between_blacks:
                         temp_pixel = img_array[input_y, left_x]
-                        if temp_pixel == 255:
+                        continued = True
+                        for new_y_index in range (input_y - difference_between_lines, input_y):
+                            if img_array[new_y_index, new_x_index] == 255:
+                                continued = False
+                                break
+                        if not continued:
+                            for new_y_index in range (input_y, input_y + difference_between_lines):
+                                if img_array[new_y_index, new_x_index] == 255:
+                                    continued = False
+                                    break
+                                else:
+                                    continued = True
+                        if temp_pixel == 255 or continued:
                             left = left_x + 1
                             break
                         left_x -= 1
@@ -173,7 +184,19 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                     if white_note:
                         for right_x in range (x_index + 1, x_index + difference_between_blacks):
                             temp_pixel = img_array[input_y, right_x]
-                            if temp_pixel == 255:
+                            continued = True
+                            for new_y_index in range (input_y - difference_between_lines, input_y):
+                                if img_array[new_y_index, new_x_index] == 255:
+                                    continued = False
+                                    break
+                            if not continued:
+                                for new_y_index in range (input_y, input_y + difference_between_lines):
+                                    if img_array[new_y_index, new_x_index] == 255:
+                                        continued = False
+                                        break
+                                    else:
+                                        continued = True
+                            if temp_pixel == 255 or continued:
                                 right = right_x - 1
                                 break
                         if right == -1:
