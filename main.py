@@ -128,6 +128,42 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                 white_note = False          
 
                     #need to now go up and down then across
+                                
+                    #figure out the most left and right stuff here!!!!
+                    #bottom left
+                    current_y = input_y
+                    current_x = x_index - difference_between_blacks
+                    if white_note:
+                        while True:
+                            temp_pixel = img_array[current_y, current_x]
+                            if temp_pixel != 255:
+                                continued = True
+                                for new_y_index in range (input_y - difference_between_lines, input_y):
+                                    if img_array[new_y_index, new_x_index] == 255:
+                                        continued = False
+                                        break
+                                if not continued:
+                                    for new_y_index in range (input_y, input_y + difference_between_lines):
+                                        if img_array[new_y_index, new_x_index] == 255:
+                                            continued = False
+                                            break
+                                        else:
+                                            continued = True
+                                if continued:
+                                    break
+                                #keep working here
+                                current_y += 1
+                            else:
+                                current_x -= 1
+                    #something like this????
+                    #use most down to see the hiehgt of shit
+                    #all this only applys to white and dashed white bc black notes dows it 
+                    #MAKE SURE THE DASHED WHITE IS FINE W/ ALL THIS NEW LOGIC
+                    most_left = current_x
+                    most_down = current_y
+                    #top right
+
+                    
                     if white_note:
                         for new_y_index in range(input_y - round(difference_between_lines_for_line_drawing / 2), input_y + round(difference_between_lines_for_line_drawing / 2)):
                             temp_x_right = x_index - int(difference_between_blacks / 2) + 1
@@ -201,7 +237,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                 break
                         if right == -1:
                             white_note = False
-
 
                     if white_note:
                         
