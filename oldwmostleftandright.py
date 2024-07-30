@@ -174,7 +174,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                     #all this only applys to white and dashed white bc black notes dows it 
                     #MAKE SURE THE DASHED WHITE IS FINE W/ ALL THIS NEW LOGIC
                     most_left = current_x
-                    most_down = current_y
 
                     current_y = input_y
                     current_x = x_index - difference_between_blacks
@@ -208,7 +207,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     break
 
                     most_right = current_x
-                    most_down = current_y
 
                     if most_right - most_left > difference_between_lines_for_line_drawing * 3:
                         white_note = False 

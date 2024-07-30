@@ -155,8 +155,86 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
 
                     #lets do something to find the truly outermost boundaries by doing this type of check i guess at the bottom left and right
                     #this way we can see if something is not big enough
-                    #then it solves a fuck ton of white note problems!                
+                    #then it solves a fuck ton of white note problems! 
+                    #bottom left
+                    continued = False
+                    current_y = input_y
+                    current_x = x_index - difference_between_blacks
+                    if white_note:
+                        while True:
+                            temp_pixel = img_array[current_y, current_x]
+                            if temp_pixel != 255:
+                                continued = True
+                                for new_y_index in range (input_y - difference_between_lines, input_y):
+                                    if img_array[new_y_index, current_x] == 255:
+                                        continued = False
+                                        break
+                                if not continued:
+                                    for new_y_index in range (input_y, input_y + difference_between_lines):
+                                        if img_array[new_y_index, current_x] == 255:
+                                            continued = False
+                                            break
+                                        else:
+                                            continued = True
+                                if continued:
+                                    break
+                                #keep working here
+                                current_y += 1
+                            else:
+                                current_x -= 1
+                                if current_x < 1:
+                                    #white_note = False
+                                    print('something broke')
+                                    break
+
+                    #all this only applys to white and dashed white bc black notes dows it 
+                                
+
+                    #keepworking buddy
+                    most_left = current_x
+
+                    current_y = input_y
+                    current_x = x_index - difference_between_blacks
+                    continued = False
+
+                    #top right
+                    if white_note:
+                        while True:
+                            temp_pixel = img_array[current_y, current_x]
+                            if temp_pixel != 255:
+                                continued = True
+                                for new_y_index in range (input_y - difference_between_lines, input_y):
+                                    if img_array[new_y_index, current_x] == 255:
+                                        continued = False
+                                        break
+                                if not continued:
+                                    for new_y_index in range (input_y, input_y + difference_between_lines):
+                                        if img_array[new_y_index, current_x] == 255:
+                                            continued = False
+                                            break
+                                        else:
+                                            continued = True
+                                if continued:
+                                    break
+                                #keep working here
+                                current_y -= 1
+                            else:
+                                current_x += 1
+                                if current_x > width - 2:
+                                    print(temp_pixel)
+                                    img_array[current_y, current_x] = 50
+                                    #white_note = False
+                                    break
+
+                    most_right = current_x
+
+                    if most_right - most_left > difference_between_lines_for_line_drawing * 3:
+                        print('we deciddd death')
+                        white_note = False                
                     
+
+
+
 
                     #this is just seeing the left and right at input y
                     left = -1
