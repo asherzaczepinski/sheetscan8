@@ -160,6 +160,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                     continued = False
                     current_y = input_y
                     current_x = x_index - difference_between_blacks
+
                     if white_note:
                         while True:
                             temp_pixel = img_array[current_y, current_x]
@@ -184,7 +185,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                 current_x -= 1
                                 if current_x < 1:
                                     #white_note = False
-                                    print('something broke')
+                                    print('here kygugkuyg')
                                     break
 
                     #all this only applys to white and dashed white bc black notes dows it 
@@ -193,8 +194,14 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                     #keepworking buddy
                     most_left = current_x
 
-                    current_y = input_y
-                    current_x = x_index - difference_between_blacks
+
+
+                    #NEED SOME #D SHIT TO HELP U SPOUT
+
+                    #issue is input y starting middle need it starting top we adding idk
+                    
+                    current_y = input_y - counter + 1
+                    current_x = x_index
                     continued = False
 
                     #top right
@@ -221,8 +228,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                             else:
                                 current_x += 1
                                 if current_x > width - 2:
-                                    print(temp_pixel)
-                                    img_array[current_y, current_x] = 50
+                                    print('issue not above')
                                     #white_note = False
                                     break
 
