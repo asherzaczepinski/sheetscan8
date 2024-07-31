@@ -159,7 +159,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                     #bottom left
                     continued = False
                     current_y = input_y
-                    current_x = x_index - round((difference_between_blacks / 2))
+                    current_x = x_index - difference_between_blacks + 1
                     just_switched = False
                     if white_note:
                         while True:
@@ -190,29 +190,17 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                 if current_x < 1:
                                     white_note = False
                                     break
-
-                    #all this only applys to white and dashed white bc black notes dows it 
-                                
-
-                    #keepworking buddy
                     most_left = current_x
-
-
-
-                    #NEED SOME #D SHIT TO HELP U SPOUT
-
-                    #issue is input y starting middle need it starting top we adding idk
-                    
-                    """ current_y = input_y 
-                    current_x = x_index - round((difference_between_blacks / 2))
                     continued = False
-
-                    #top right
+                    current_y = input_y
+                    current_x = x_index - 1
+                    just_switched = False
                     if white_note:
                         while True:
                             temp_pixel = img_array[current_y, current_x]
                             if temp_pixel != 255:
-                                current_x = x_index - round((difference_between_blacks / 2))
+                                if just_switched:
+                                    break
                                 continued = True
                                 for new_y_index in range (input_y - difference_between_lines, input_y):
                                     if img_array[new_y_index, current_x] == 255:
@@ -228,21 +216,20 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                 if continued:
                                     break
                                 #keep working here
-                                current_y += 1
+                                current_y -= 1
+                                just_switched = True
                             else:
+                                just_switched = False
                                 current_x += 1
                                 if current_x > width - 2:
-                                    print('issue not above')
                                     white_note = False
                                     break
-
-                     """    
-
-                    """if most_right - most_left > difference_between_lines_for_line_drawing * 3:
+                    most_right = current_x
+                    if most_right - most_left > difference_between_lines_for_line_drawing * 3:
                         print('we deciddd death')
                         #i put comment on white note = false it def is an issue w the starting area
                         white_note = False                
-                    """
+                    
 
 
 
