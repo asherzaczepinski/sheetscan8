@@ -386,6 +386,13 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
 
 
 
+
+
+
+
+
+
+                                        #need changed direction ocne ipmlemented
                                         #implement the changed idifrection once!!!!
                                                 
                                         #first do the lines
