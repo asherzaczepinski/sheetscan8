@@ -225,15 +225,8 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     white_note = False
                                     break
                     most_right = current_x
-                    if most_right - most_left > difference_between_lines_for_line_drawing * 3:
-                        print('we deciddd death')
-                        #i put comment on white note = false it def is an issue w the starting area
+                    if most_right - most_left < difference_between_lines or most_right - most_left > difference_between_lines * 1.5:
                         white_note = False                
-                    
-
-
-
-
                     #this is just seeing the left and right at input y
                     left = -1
                     right = -1
