@@ -250,13 +250,16 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
 
 
                     if white_note:
-                        
+                        went_here = False
                         past_temp_y_above = -1
                         past_temp_y_below = -1
                         #testing where it is here
                         start = x_index - difference_between_blacks + 1
                         end = x_index - 1
                         normal_white = True
+                        changed_direction_above = 0
+                        changed_direction_below = 0
+                        
                         for new_x_index in range(start, end):
                             if not white_note:
                                 break
@@ -299,7 +302,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     if temp_pixel_below != 255:
                                         break
                                     temp_y_below += 1  
-                             
+                            
                             if white_note:
                                 if past_temp_y_below != -1:
                                     if past_temp_y_below - temp_y_below < 0:
@@ -334,6 +337,36 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         white_note = False
                                         break
                                 else:
+                                    went_here = True
+                                    if white_note and past_temp_y_above != -1:
+                                        if changed_direction_above == 0: 
+                                            #going up has to start in this way
+                                            if past_temp_y_above - temp_y_above > 0:
+                                                changed_direction_above = 1
+                                            elif past_temp_y_above - temp_y_above != 0:
+                                                white_note = False
+                                        elif changed_direction_above == 1:
+                                            #if it's going up make sure it starts going down
+                                            if temp_y_above - past_temp_y_above > 0:
+                                                changed_direction_above = 2
+                                        else:
+                                            if past_temp_y_above - temp_y_above > 0:
+                                                white_note = False
+                                    if white_note and past_temp_y_below != -1:
+                                        if changed_direction_below == 0: 
+                                            #<= bc of the below it can start straight too not only down
+                                            if past_temp_y_below - temp_y_below <= 0:
+                                                changed_direction_below = 1
+                                            else:
+                                                white_note = False
+                                        elif changed_direction_below == 1:
+                                            #if it's going down or straight make sure it starts going up
+                                            if temp_y_below - past_temp_y_below < 0:
+                                                changed_direction_below = 2
+                                        else:
+                                            if past_temp_y_below - temp_y_below < 0:
+                                                white_note = False
+                                    
                                     if abs((past_temp_y_above - temp_y_above) - (temp_y_below - past_temp_y_below)) < difference_between_lines / 10:
                                         past_temp_y_above = temp_y_above
                                         past_temp_y_below = temp_y_below
@@ -384,22 +417,13 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         else:
                                             keep_going = False
 
-
-
-
-
-
-
-
-
-                                        #need changed direction ocne ipmlemented
-                                        #implement the changed idifrection once!!!!
-                                                
-                                        #first do the lines
-                                        #put in the changed direction once thingy!!!
                                     #for the dashed white notes same logic for everything remember we changed up a lot of stuff so its gonna be a lot of work
                                     #maybe even compare this commit with some old ones to figure out exactly what we changed
                                     #changed some shit w white note itself --- this was related to just the white note length shit so not applicableand then the obvious 
+                        if went_here:
+                            white_note = False
+                            if changed_direction_above == 2 or changed_direction_below == 2:
+                                white_note = True
                         if white_note:
                             #little /5 cuz it is not all the way
                             if max_above > input_y - round(difference_between_lines / 5):
@@ -1572,7 +1596,7 @@ def find_and_combine_extra(arr1, arr2):
     return result
 
 # Example usage
-pdf_path = "input.pdf"
+pdf_path = "hello.pdf"
 input_folder = "input"
 new_input = 'new_input'
 
@@ -1594,7 +1618,6 @@ for filename in os.listdir(input_folder):
             notes = find_and_combine_extra(return_extract_highlighted_lines_and_columns_from_image_took_out, extract_highlighted_lines_and_columns_from_image_kept_in(image_path))
             
             for note in notes:
-                #figure out what is happening i think it might have something to do w our combination but idk
                 top_left = note[0]
                 bottom_right = note[1]
                 assigned_value = y_assigner(sorted_middles, top_left[1] + (round(difference_between_lines_for_line_drawing / 2) - 1))
