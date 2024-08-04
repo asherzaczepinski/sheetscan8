@@ -152,10 +152,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                 if right_flag == False:
                                     white_note = False
 
-
-                    #lets do something to find the truly outermost boundaries by doing this type of check i guess at the bottom left and right
-                    #this way we can see if something is not big enough
-                    #then it solves a fuck ton of white note problems! 
                     #bottom left
                     continued = False
                     current_y = input_y
@@ -1013,6 +1009,14 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                             ending_of_space_below_outside = temporary_x - 1
                             break
                         temporary_x += 1
+
+                if white_note:
+                    #doing this here just figure out where dashed whole white note is screwing up and make it more lenient
+                    #it is practically the same as the dashed white note
+                    img_array[input_y: input_y + 50, x_index - 20: x_index + 200] = 50
+                    img = Image.fromarray(img_array)
+                    img.save('input/' + 'testing' + image_path[6:])
+                    print('got to here')
 
                 #+1 bc of how it is the inside white pixels spacing have to compensate
                 distance_below = ending_of_space_below_inside - starting_of_space_below_inside + 1
