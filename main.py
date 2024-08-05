@@ -27,6 +27,11 @@
 #need to fix the scrawny white notes
 #then move onto the dashed white
 
+
+
+#FOR THE SCRAWNY WHITE NOTes I NOTIVED A REMARKABLE PATTERN
+#THEY ARE ALWAYS THE QUARTER NOTES RIGHT UNDER THE STAFF --- FIGURE OUT WTF IS HAPPENING
+
 from PIL import Image, ImageDraw
 from pathlib import Path
 import fitz  # PyMuPDF
@@ -79,8 +84,11 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
     for x_index in range(width):
         pixel = img_array[input_y, x_index]
         if pixel != 255 and x_index != width - 1:
+            
+
             black_count += 1
             if difference_between_blacks >= difference_between_lines_for_line_drawing * 0.4 and difference_between_blacks < difference_between_lines_for_line_drawing * 1.5:
+                
                 counter = 0
                 white_note = True
                 above = False
@@ -104,6 +112,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                         break
                     counter += 1
                 
+
                 #this is going across and then up and down 
                 if white_note:
                     
@@ -161,16 +170,12 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     temp_x_right -= 1
                                 if right_flag == False:
                                     white_note = False
-
                     #bottom left
                     continued = False
                     current_y = input_y
                     current_x = x_index - difference_between_blacks + 1
                     just_switched = False
                     if white_note:
-                        img_array[input_y: input_y + 50, x_index - 20: x_index + 200] = 50
-                        img = Image.fromarray(img_array)
-                        img.save('input/' + 'testing' + image_path[6:])
                         while True:
                             temp_pixel = img_array[current_y, current_x]
                             if temp_pixel != 255:
@@ -452,6 +457,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                             top_left = [left - 5, input_y - 10]
                             bottom_right = [right + 5, input_y + 10]   
                             white_notes.append([top_left, bottom_right])
+            
             difference_between_blacks = 0
         else:
             #if it's white
