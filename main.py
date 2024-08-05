@@ -24,7 +24,9 @@
 
 
 
-#maybe if it sets it to white note is false that is what's offsetting it
+#need to fix the scrawny white notes
+#then move onto the dashed white
+
 from PIL import Image, ImageDraw
 from pathlib import Path
 import fitz  # PyMuPDF
@@ -104,6 +106,10 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                 
                 #this is going across and then up and down 
                 if white_note:
+                    
+                    #past here
+
+
                     first = -1
                     middle = -1
                     start = x_index - difference_between_blacks
@@ -162,6 +168,9 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                     current_x = x_index - difference_between_blacks + 1
                     just_switched = False
                     if white_note:
+                        img_array[input_y: input_y + 50, x_index - 20: x_index + 200] = 50
+                        img = Image.fromarray(img_array)
+                        img.save('input/' + 'testing' + image_path[6:])
                         while True:
                             temp_pixel = img_array[current_y, current_x]
                             if temp_pixel != 255:
@@ -431,15 +440,9 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                             #little /5 cuz it is not all the way
                             if max_above > input_y - round(difference_between_lines / 10):
                                 white_note = False
-                                img_array[input_y: input_y + 50, x_index - 20: x_index + 200] = 50
-                                img = Image.fromarray(img_array)
-                                img.save('input/' + 'testing' + image_path[6:])
                             if white_note:
                                 if max_below < input_y + round(difference_between_lines / 10):
                                     white_note = False
-                                    img_array[input_y: input_y + 50, x_index - 20: x_index + 200] = 50
-                                    img = Image.fromarray(img_array)
-                                    img.save('input/' + 'testing' + image_path[6:])
                             #overall height check
                             if white_note:
                                 if max_below - max_above > difference_between_lines_for_line_drawing + line_height * 2:
