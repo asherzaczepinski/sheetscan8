@@ -21,6 +21,10 @@
 #do something where we run it first w/ lines removed
 #then we make sure that any new notes aren't inside overlapping notes
 #then we see if the user clicks on something and it is double notes or what not we will 
+
+
+
+#maybe if it sets it to white note is false that is what's offsetting it
 from PIL import Image, ImageDraw
 from pathlib import Path
 import fitz  # PyMuPDF
@@ -373,6 +377,11 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         white_note = False
                                         break
                                     if keep_going:
+
+
+
+
+                                        #its in here
                                         middle = round((max_above + max_below) / 2)
                                         left_thickness = 0
                                         right_thickness = 0
@@ -412,24 +421,29 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                             keep_going = False
                                         else:
                                             keep_going = False
-
-                                    #for the dashed white notes same logic for everything remember we changed up a lot of stuff so its gonna be a lot of work
-                                    #maybe even compare this commit with some old ones to figure out exactly what we changed
-                                    #changed some shit w white note itself --- this was related to just the white note length shit so not applicableand then the obvious 
                         if went_here:
                             white_note = False
                             if changed_direction_above == 2 or changed_direction_below == 2:
                                 white_note = True
                         if white_note:
+                            #in here
+
                             #little /5 cuz it is not all the way
-                            if max_above > input_y - round(difference_between_lines / 5):
+                            if max_above > input_y - round(difference_between_lines / 10):
                                 white_note = False
+                                img_array[input_y: input_y + 50, x_index - 20: x_index + 200] = 50
+                                img = Image.fromarray(img_array)
+                                img.save('input/' + 'testing' + image_path[6:])
                             if white_note:
-                                if max_below < input_y + round(difference_between_lines / 5):
+                                if max_below < input_y + round(difference_between_lines / 10):
                                     white_note = False
+                                    img_array[input_y: input_y + 50, x_index - 20: x_index + 200] = 50
+                                    img = Image.fromarray(img_array)
+                                    img.save('input/' + 'testing' + image_path[6:])
                             #overall height check
                             if white_note:
-                                if max_below - max_above > difference_between_lines + line_height:
+                                if max_below - max_above > difference_between_lines_for_line_drawing + line_height * 2:
+                                    #not here
                                     white_note = False
                         if white_note:
                             top_left = [left - 5, input_y - 10]
@@ -1013,17 +1027,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                             ending_of_space_below_outside = temporary_x - 1
                             break
                         temporary_x += 1
-
-
-
-                #before here
-                """ if white_note:
-                    #doing this here just figure out where dashed whole white note is screwing up and make it more lenient
-                    #it is practically the same as the dashed white note
-                    img_array[input_y: input_y + 50, x_index - 20: x_index + 200] = 50
-                    img = Image.fromarray(img_array)
-                    img.save('input/' + 'testing' + image_path[6:])
-                    print('got to here') """
 
                 #+1 bc of how it is the inside white pixels spacing have to compensate
                 distance_below = ending_of_space_below_inside - starting_of_space_below_inside + 1
