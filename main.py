@@ -1248,6 +1248,11 @@ def extract_highlighted_lines_and_columns_from_image_took_out(image_path, thresh
             group = []
         #this is on the first line of a staff and goes up 
         elif row_index % 5 == 0:
+            
+            #need some way to work in this here to add one extra line above and below where it is getting stuff from or some shit... pretty positive that is the issue here is the line stuff..maybe two extra lines
+            #to check lets add everything back and see what happens
+
+
             #Going to work on the removal of the every other line HERE!!!!
             temp_difference = lines[row_index + 1][1] - current_y
             if row_index == 0:
