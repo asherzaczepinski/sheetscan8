@@ -1629,7 +1629,7 @@ for filename in os.listdir(input_folder):
         try:
 
 
-
+            #i think we should account for more coverage on the line removal area.... i think the parts are still affected above and below inthat middle like range 
             #this particular format is just for testing
             image_path = os.path.join(input_folder, filename)
             new_image_path = os.path.join(new_input, filename)
