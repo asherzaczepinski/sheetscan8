@@ -1628,6 +1628,9 @@ for filename in os.listdir(input_folder):
     if filename.endswith(".png") or filename.endswith(".jpg"):
         try:
 
+
+
+            #this particular format is just for testing
             image_path = os.path.join(input_folder, filename)
             new_image_path = os.path.join(new_input, filename)
             # Load the image
@@ -1638,7 +1641,7 @@ for filename in os.listdir(input_folder):
 
             return_extract_highlighted_lines_and_columns_from_image_took_out, sorted_middles, difference_between_lines_for_line_drawing = extract_highlighted_lines_and_columns_from_image_took_out(image_path)
 
-            notes = find_and_combine_extra(return_extract_highlighted_lines_and_columns_from_image_took_out, extract_highlighted_lines_and_columns_from_image_kept_in(image_path))
+            notes = return_extract_highlighted_lines_and_columns_from_image_took_out 
             
             for note in notes:
                 top_left = note[0]
@@ -1658,5 +1661,31 @@ for filename in os.listdir(input_folder):
             #img array might be regenerating idk some stupid shit is happening right here
             img = Image.fromarray(img_array)
             img.save(new_image_path)
+
+            notes = extract_highlighted_lines_and_columns_from_image_kept_in(image_path)
+
+            # Load the image
+            img = Image.open(image_path).convert("L")  # Convert to grayscale
+
+            # Convert the PIL Image to a NumPy array
+            img_array = np.array(img)
+
+            #very odd in the above one it is not finding anything
+            for note in notes:
+                top_left = note[0]
+                bottom_right = note[1]
+                assigned_value = y_assigner(sorted_middles, top_left[1] + (round(difference_between_lines_for_line_drawing / 2) - 1))
+                top_left[1] = assigned_value - (round(difference_between_lines_for_line_drawing / 2) - 1)
+                bottom_right[1] = assigned_value + (round(difference_between_lines_for_line_drawing / 2) - 1)
+                #right side
+                img_array[top_left[1] - 5: bottom_right[1] + 5, bottom_right[0] + 5] = 0
+                #left side
+                img_array[top_left[1] - 5: bottom_right[1] + 5, top_left[0] - 5] = 0
+                #top side
+                img_array[top_left[1] - 5, top_left[0] - 5:bottom_right[0] + 5] = 0
+                #bottom side
+                img_array[bottom_right[1] + 5, top_left[0] - 5:bottom_right[0] + 5] = 0  
+            img = Image.fromarray(img_array)
+            img.save('sigma/' + new_image_path)
         except IndexError as e:
             print(e) 
