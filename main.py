@@ -1647,7 +1647,7 @@ for filename in os.listdir(input_folder):
 
             return_extract_highlighted_lines_and_columns_from_image_took_out, sorted_middles, difference_between_lines_for_line_drawing = extract_highlighted_lines_and_columns_from_image_took_out(image_path)
 
-            notes = return_extract_highlighted_lines_and_columns_from_image_took_out 
+            """ notes = return_extract_highlighted_lines_and_columns_from_image_took_out 
             
             for note in notes:
                 top_left = note[0]
@@ -1666,8 +1666,13 @@ for filename in os.listdir(input_folder):
                 
             #img array might be regenerating idk some stupid shit is happening right here
             img = Image.fromarray(img_array)
-            img.save(new_image_path)
+            img.save(new_image_path) """
 
+
+
+
+            #first figure out which one is doing more kept in or took out
+            #then edit the logic to extend one in whichever one that is!
             notes = extract_highlighted_lines_and_columns_from_image_kept_in(image_path)
 
             # Load the image
