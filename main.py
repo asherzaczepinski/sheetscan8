@@ -1462,17 +1462,30 @@ def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, thresho
                 stopping_point += round(temp_difference / 2)
             else:
                 stopping_point = (row[1] + lines[row_index - 1][1]) / 2
+            #before first
+            group.extend([[current_y - round(temp_difference / 2), current_y - round(temp_difference / 2) + round(line_height / 2)]])
+            last_line = -1
             for add_row_index in range(4): 
                 future_line = lines[row_index + add_row_index + 1][1] 
+                last_line = future_line
                 group.extend([[int((future_line + lines[row_index + add_row_index][1]) / 2), int((future_line + lines[row_index + add_row_index][1]) / 2) + round(line_height / 2)]])
                 if add_row_index != 3:
                     group.extend([[future_line, future_line + round(line_height / 2)]])
+            #after first
+            #make it draw the lines
+            group.extend([[last_line + round(temp_difference / 2), last_line + round(temp_difference / 2) + round(line_height / 2)]])
             invisible_lines.append(group)
             group = []
     notes = []
     for group in invisible_lines:
 
         for [current_loop_y, new_y] in group:
+            img_array[current_loop_y: current_loop_y + 1, 0: width] = 50
+            
+            
+
+
+
             #i think it's not going all the way
             row_notes = []
             # Process the lines and get the notes
@@ -1545,7 +1558,8 @@ def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, thresho
                     row_notes.append(['dashed_white', dashed_white])
                 index += 1
             notes.append(row_notes)
-
+    img = Image.fromarray(img_array)
+    img.save('sigma/new_input/page_2.png')
     past_notes = []
     
     for index, row in enumerate(notes):
