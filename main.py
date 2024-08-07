@@ -24,13 +24,9 @@
 
 
 
-#need to fix the scrawny white notes
-#then move onto the dashed white
-
-
-
-#FOR THE SCRAWNY WHITE NOTes I NOTIVED A REMARKABLE PATTERN
-#THEY ARE ALWAYS THE QUARTER NOTES RIGHT UNDER THE STAFF --- FIGURE OUT WTF IS HAPPENING
+# move onto the dashed white -- different logic
+#for the white notes changed direction maybe do something where it like does changed direction but can't go change again!
+#eventuallydo the thing where if the note is inside the notes then likes it's bad
 
 from PIL import Image, ImageDraw
 from pathlib import Path
