@@ -1671,8 +1671,10 @@ for filename in os.listdir(input_folder):
 
 
 
-            #first figure out which one is doing more kept in or took out
-            #then edit the logic to extend one in whichever one that is!
+            #extend kept in logic to the ones below and shit
+            #this is so weird something is off bc how tf is this the ones it's finding????
+            #it cuz of this new sigma input thingy that's returning it!!!
+            #all good eventually revert to some old commits for this bottom logic after we replace the top logic!!!
             notes = extract_highlighted_lines_and_columns_from_image_kept_in(image_path)
 
             # Load the image
