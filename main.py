@@ -1480,7 +1480,7 @@ def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, thresho
     for group in invisible_lines:
 
         for [current_loop_y, new_y] in group:
-            img_array[current_loop_y: current_loop_y + 1, 0: width] = 50
+            #img_array[current_loop_y: current_loop_y + 1, 0: width] = 50
             
             
 
@@ -1558,8 +1558,8 @@ def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, thresho
                     row_notes.append(['dashed_white', dashed_white])
                 index += 1
             notes.append(row_notes)
-    img = Image.fromarray(img_array)
-    img.save('sigma/new_input/page_2.png')
+   # img = Image.fromarray(img_array)
+    #img.save('sigma/new_input/page_2.png')
     past_notes = []
     
     for index, row in enumerate(notes):
