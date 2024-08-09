@@ -1,4 +1,4 @@
-from PIL import Image, ImageDraw
+from PIL import Image
 import numpy as np
 
 def process_line(input_y, img_array, width, difference_between_lines_for_line_drawing, difference_between_lines, line_height, image_path):

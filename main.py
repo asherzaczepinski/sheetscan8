@@ -1,35 +1,3 @@
-#it should also scan rythms with that orchestra thingy i used to have that could do that and like outline it then the students could record themselves clapping to it
-#once this was done i would try to sell it to the districts
-#make it so for every note it will go back and associate exactly the outline of it!
-#eventually put in alternate fingerings
-
-#---- i would then start selling bulk packages to districts
-#the idea would be the teachers search of enter in pdfs for each studnets thing
-#the students go onto website and use the class code for all there different music
-#it could be clarinet trombone you name it
-#it would put it in and let the students work w/ it
-#read up: https://github.com/AbdallahHemdan/Orchestra
-#don't need full outline lit just need its results!
-#dev the spacebar tapping interface
-
-#maybe use pre-combined everything logic for testing!
-#for each note we'll store a max top max bottom max left max right return it w/ this along w what type of note it is
-#using this we can make it super accurately outlined for the user clicking the notes!
-
-#if to things r too close to each other on the same line choose the one on the right
-#do for the line added back only the current loop y in that middle range!
-#do something where we run it first w/ lines removed
-#then we make sure that any new notes aren't inside overlapping notes
-#then we see if the user clicks on something and it is double notes or what not we will 
-
-
-
-# move onto the dashed white -- different logic
-#for the white notes changed direction maybe do something where it like does changed direction but can't go change again!
-#eventuallydo the thing where if the note is inside the notes then likes it's bad
-
-from process_line import process_line
-from sort_notes import sort_notes
 from return_notes import return_notes
 
 from PIL import Image, ImageDraw
@@ -210,6 +178,7 @@ def extract_highlighted_lines_and_columns_from_image_took_out(image_path, thresh
     return new_notes, sorted_middles, difference_between_lines_for_line_drawing
     
 def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, threshold=2/3):
+    global all_rows
     open_pdf_into_input(pdf_path, input_folder, new_input)
 
     # Load the image
@@ -300,118 +269,7 @@ def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, thresho
             invisible_lines.append(group)
             group = []
 
-    notes = []
-    for group in invisible_lines:
-
-        for [current_loop_y, new_y] in group:
-            #i think it's not going all the way
-            row_notes = []
-            # Process the lines and get the notes
-            current_dashed_whites, current_black_notes, current_white_notes = process_line(
-                current_loop_y, img_array, width, difference_between_lines_for_line_drawing, 
-                difference_between_lines, line_height, image_path
-            )
-            new_dashed_whites, new_black_notes, new_white_notes = process_line(
-                new_y, img_array, width, difference_between_lines_for_line_drawing, 
-                difference_between_lines, line_height, image_path
-            )
-
-            all_blacks_in_line = sorted(current_black_notes + new_black_notes, key=lambda note: note[0][0])
-            all_whites_in_line = sorted(current_white_notes + new_white_notes, key=lambda note: note[0][0])
-            all_dashed_whites_in_line = sorted(current_dashed_whites + new_dashed_whites, key=lambda note: note[0][0])
-
-            index = 0
-
-            while index < len(all_blacks_in_line):
-                black_note = all_blacks_in_line[index]
-                if index == len(all_blacks_in_line) - 1:
-                    row_notes.append(['black', black_note])
-                    break
-                next_note = all_blacks_in_line[index + 1]
-                
-                if next_note[0][0] - black_note[0][0] < difference_between_lines:
-                    #compare which ones y is greater it doesn't matter the x
-                    if next_note[0][1] < black_note[0][1]:
-                        row_notes.append(['black', black_note])
-                    else:
-                        row_notes.append(['black', next_note])
-                    index += 1
-                else:
-                    row_notes.append(['black', black_note])
-                index += 1
-            
-            index = 0
-
-            while index < len(all_whites_in_line):
-                white_note = all_whites_in_line[index]
-                if index == len(all_whites_in_line) - 1:
-                    row_notes.append(['white', white_note])
-                    break
-                next_note = all_whites_in_line[index + 1]
-                if next_note[0][0] - white_note[0][0] < difference_between_lines:
-                    if next_note[0][1] < white_note[0][1]:
-                        row_notes.append(['white', white_note])
-                    else:
-                        row_notes.append(['white', next_note])
-                    index += 1
-                else:
-                    row_notes.append(['white', white_note])
-                index += 1
-
-            index = 0
-
-            while index < len(all_dashed_whites_in_line):
-                dashed_white = all_dashed_whites_in_line[index]
-                if index == len(all_dashed_whites_in_line) - 1:
-                    row_notes.append(['dashed_white', dashed_white])
-                    break
-                next_note = all_dashed_whites_in_line[index + 1]
-                if next_note[0][0] - dashed_white[0][0] < difference_between_lines:
-                    if next_note[0][1] < dashed_white[0][1]:
-                        row_notes.append(['dashed_white', dashed_white])
-                    else:
-                        row_notes.append(['dashed_white', next_note])
-                    index += 1
-                else:
-                    row_notes.append(['dashed_white', dashed_white])
-                index += 1
-            notes.append(row_notes)
-
-    past_notes = []
-    
-    for index, row in enumerate(notes):
-        if index != 0:
-            for index2, note in enumerate(row):
-                note = note[1]
-                for index3, past_note in enumerate(past_notes):
-                    past_note = past_note[1]
-                    #this is an example of a specific usecase when removing!
-                    if abs(past_note[0][0] - note[0][0]) <= difference_between_lines:
-                        if past_notes[index3][0] == 'black' and row[index2][0] != 'black':
-                            notes[index - 1].pop(index3)
-                            break
-                        else:
-                            notes[index].pop(index2)
-                            break
-        past_notes = row
-
-    notes = sort_notes(notes)
-    new_notes = []
-    for row in notes:
-        past_note = -1
-        for note in row:
-            note = note[1]
-            #sometimes they like encompass each other thats y abs like it could start before end later
-            if past_note != -1 and abs(note[1][0] - past_note) < (difference_between_lines * 2 / 3):
-                continue
-            new_notes.append(note)
-            past_note = note[1][0] 
-
-    img = Image.fromarray(img_array)
-    img.save(image_path)
-
-    lines.append(image_path)
-    all_rows.append(lines)
+    new_notes, all_rows = return_notes(invisible_lines, img_array, width, difference_between_lines_for_line_drawing, difference_between_lines, line_height, image_path, Image, all_rows, lines)
 
     return new_notes
 
@@ -439,8 +297,6 @@ def open_pdf_into_input(pdf_path, input_folder, new_input):
         if not os.path.exists(os.path.dirname(image_path2)):
             os.makedirs(os.path.dirname(image_path2))
         img.save(image_path)
-
-#use this to find the new shit
 
 def find_and_combine_extra(arr1, arr2):
     # Convert each sub-array and inner lists to a tuple for hashability
@@ -473,9 +329,11 @@ for filename in os.listdir(input_folder):
             # Convert the PIL Image to a NumPy array
             img_array = np.array(img)
 
-            return_extract_highlighted_lines_and_columns_from_image_took_out, sorted_middles, difference_between_lines_for_line_drawing = extract_highlighted_lines_and_columns_from_image_took_out(image_path)
+            took_out, sorted_middles, difference_between_lines_for_line_drawing = extract_highlighted_lines_and_columns_from_image_took_out(image_path)
 
-            notes = find_and_combine_extra(return_extract_highlighted_lines_and_columns_from_image_took_out, extract_highlighted_lines_and_columns_from_image_kept_in(image_path))
+            kept_in = extract_highlighted_lines_and_columns_from_image_kept_in(image_path)
+
+            notes = find_and_combine_extra(took_out, kept_in)
             
             for note in notes:
                 top_left = note[0]
