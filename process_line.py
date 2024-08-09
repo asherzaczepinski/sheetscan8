@@ -11,8 +11,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
     for x_index in range(width):
         pixel = img_array[input_y, x_index]
         if pixel != 255 and x_index != width - 1:
-            
-
             black_count += 1
             if difference_between_blacks >= difference_between_lines_for_line_drawing * 0.4 and difference_between_blacks < difference_between_lines_for_line_drawing * 1.5:
                 
@@ -403,15 +401,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
 
 
 
-            # Load the image
-            img2 = Image.open('fake_testing/' + image_path).convert("L")  # Convert to grayscale
-
-            # Convert the PIL Image to a NumPy array
-            img_array2 = np.array(img2)
-
-            img_array2[input_y: input_y + 2, x_index - round(black_count / 2): x_index - round(black_count / 2) + 5] = 50
-            img = Image.fromarray(img_array2)
-            img.save('fake_testing/' + image_path)
+            
             changed_direction_above = 0
             changed_direction_below = 0
 
@@ -830,7 +820,13 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
             else:
                 white_note = True
 
-               
+                #AFTER THIS
+
+
+                
+
+
+
                 #dashed white notes
                 max_above = -1
                 max_below = -1
@@ -872,14 +868,32 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
 
 
 
+                # Load the image
+                img2 = Image.open(image_path).convert("L")  # Convert to grayscale
 
+                # Convert the PIL Image to a NumPy array
+                img_array2 = np.array(img2)
+
+                img_array2[input_y: input_y + 2, x_index - round(black_count / 2): x_index - round(black_count / 2) + 5] = 50
+                img = Image.fromarray(img_array2)
+                img.save('fake_testing/' + image_path)
                 #before here
                 
 
 
 
 
-                #starting
+
+
+
+
+
+
+
+
+
+
+
                 temporary_x = x_index - round(black_count / 2)
                 #getting starting inside
                 if white_note:
