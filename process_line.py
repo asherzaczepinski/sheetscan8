@@ -846,9 +846,12 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                     while True:
                         temp_pixel_above = img_array[starting_above_white - counter, x_index - int(black_count / 2)]
                         temp_pixel_below = img_array[starting_below_white + counter, x_index - int(black_count / 2)]
-                        if counter > int(difference_between_lines_for_line_drawing / 3.5):
+                        if counter > int(difference_between_lines_for_line_drawing / 2):
                             white_note = False
 
+
+                            #can also do /3.5 and else if not be like ok that chill just make sure sides r thick
+                            """ 
 
                             img2 = Image.open('fake_testing/' + image_path).convert("L")  # Convert to grayscale
 
@@ -857,7 +860,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
 
                             img_array2[input_y: input_y + 2, x_index - round(black_count / 2): x_index - round(black_count / 2) + 5] = 50
                             img2 = Image.fromarray(img_array2)
-                            img2.save('fake_testing/' + image_path)
+                            img2.save('fake_testing/' + image_path) """
                             break
                         if temp_pixel_above != 255:
                             above = True

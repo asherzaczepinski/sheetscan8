@@ -330,13 +330,13 @@ for filename in os.listdir(input_folder):
             img_array = np.array(img)
 
 
-            #testing here
+            """ #testing here
             if os.path.exists('fake_testing/' + image_path):
                 img2 = Image.open('fake_testing/' + image_path).convert('L')
                 img_array2 = img_array.copy()
                 img2 = Image.fromarray(img_array2)
                 img2.save('fake_testing/' + image_path)
-
+            """
 
 
 
@@ -361,7 +361,6 @@ for filename in os.listdir(input_folder):
                 #bottom side
                 img_array[bottom_right[1] + 5, top_left[0] - 5:bottom_right[0] + 5] = 0  
                 
-            #img array might be regenerating idk some stupid shit is happening right here
             img = Image.fromarray(img_array)
             img.save(new_image_path)
         except IndexError as e:
