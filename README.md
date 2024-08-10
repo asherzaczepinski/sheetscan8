@@ -4,7 +4,7 @@
 This project provides a Python-based Optical Music Recognition system without the use of AI algorithms. It processes images of musical scores to detect and analyze printed music. The system extracts notes (and other musical symbols eventually) directly from images in PDFs containing musical scores.
 
 ## Features
-- Extract notes, rests, and other musical symbols from images.
+- Extract notes (other coming soon...)
 - Support for processing images in bulk via directory input.
 - Convert PDF files into images for note extraction.
 - Draw rectangles around detected notes for visual verification (development stage).
