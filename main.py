@@ -312,7 +312,7 @@ def find_and_combine_extra(arr1, arr2):
     return result
 
 # Example usage
-pdf_path = "hello.pdf"
+pdf_path = "testinput.pdf"
 input_folder = "input"
 new_input = 'new_input'
 
@@ -328,17 +328,6 @@ for filename in os.listdir(input_folder):
 
             # Convert the PIL Image to a NumPy array
             img_array = np.array(img)
-
-
-            """ #testing here
-            if os.path.exists('fake_testing/' + image_path):
-                img2 = Image.open('fake_testing/' + image_path).convert('L')
-                img_array2 = img_array.copy()
-                img2 = Image.fromarray(img_array2)
-                img2.save('fake_testing/' + image_path)
-            """
-
-
 
             took_out, sorted_middles, difference_between_lines_for_line_drawing = extract_highlighted_lines_and_columns_from_image_took_out(image_path)
 
