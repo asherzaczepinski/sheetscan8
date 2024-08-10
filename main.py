@@ -1,3 +1,7 @@
+#NEW INPUT NOT UPDATING FOR SOME REASON ---- CHECK OUT THE WHITE NOte CHANGED DIRECTION EXTRA LOGIC
+#OTHER THAN THAT GOING GREAT!
+
+
 from return_notes import return_notes
 
 from PIL import Image, ImageDraw
@@ -70,7 +74,6 @@ def y_assigner(y_array, y):
     else:
         return before    
 
-#the issue is how it is processing it it is doing thE NON LINE ONES GODDAMN
 def extract_highlighted_lines_and_columns_from_image_took_out(image_path, threshold=2/3):
     global all_rows
     open_pdf_into_input(pdf_path, input_folder, new_input)
@@ -312,7 +315,7 @@ def find_and_combine_extra(arr1, arr2):
     return result
 
 # Example usage
-pdf_path = "testinput.pdf"
+pdf_path = "input.pdf"
 input_folder = "input"
 new_input = 'new_input'
 
