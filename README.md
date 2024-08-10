@@ -1,7 +1,7 @@
 # Super fast OMR (optical music recognition) without AI!
 
 ## Overview 
-This project provides a Python-based Optical Music Recognition system without the use of AI algorithms. It processes images of musical scores to detect and analyze printed music. The system extracts notes and other musical symbols directly from images and can process both individual images and PDFs containing musical scores.
+This project provides a Python-based Optical Music Recognition system without the use of AI algorithms. It processes images of musical scores to detect and analyze printed music. The system extracts notes (and other musical symbols eventually) directly from images in PDFs containing musical scores.
 
 ## Features
 - Extract notes, rests, and other musical symbols from images.
