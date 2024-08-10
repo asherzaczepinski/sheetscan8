@@ -329,6 +329,17 @@ for filename in os.listdir(input_folder):
             # Convert the PIL Image to a NumPy array
             img_array = np.array(img)
 
+
+            #testing here
+            if os.path.exists('fake_testing/' + image_path):
+                img2 = Image.open('fake_testing/' + image_path).convert('L')
+                img_array2 = img_array.copy()
+                img2 = Image.fromarray(img_array2)
+                img.save('fake_testing/' + image_path)
+
+
+
+
             took_out, sorted_middles, difference_between_lines_for_line_drawing = extract_highlighted_lines_and_columns_from_image_took_out(image_path)
 
             kept_in = extract_highlighted_lines_and_columns_from_image_kept_in(image_path)
