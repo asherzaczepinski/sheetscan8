@@ -332,7 +332,6 @@ for filename in os.listdir(input_folder):
 
             #testing here
             if os.path.exists('fake_testing/' + image_path):
-                print('here')
                 img2 = Image.open('fake_testing/' + image_path).convert('L')
                 img_array2 = img_array.copy()
                 img2 = Image.fromarray(img_array2)
