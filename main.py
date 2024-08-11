@@ -1,5 +1,6 @@
 #fix the notes that aren't working!
-#somehow for the dashed white that dot is fucking both of them up idk why
+#i think dashed white might be an issue w the in a row thingy
+
 
 from return_notes import return_notes
 
@@ -115,6 +116,19 @@ def extract_highlighted_lines_and_columns_from_image_took_out(pdf_path, input_fo
     #replace the part we took out
     for row in lines:
         upper_line_y = row[1] - 1
+
+
+        #test to see if its skipping thea bove
+        img2 = Image.open(image_path).convert("L")  # Convert to grayscale
+
+        # Convert the PIL Image to a NumPy array
+        img_array2 = np.array(img2)
+        img_array2[upper_line_y, 0: width] = 50
+        img2 = Image.fromarray(img_array2);
+        img2.save(image_path)
+
+
+
         bottom_line_y = row[3] 
         for x_index in range(width):
             if img_array[upper_line_y, x_index] != 255 and img_array[bottom_line_y, x_index] != 255:

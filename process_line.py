@@ -95,11 +95,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     temp_x_right -= 1
                                 if right_flag == False:
                                     white_note = False
-                    
-                    #after this
-                                    
-
-                    #bottom left
+                                                        
                     continued = False
                     current_y = input_y
                     current_x = x_index - difference_between_blacks + 1
@@ -133,6 +129,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                 if current_x < 1:
                                     white_note = False
                                     break
+                                
                     most_left = current_x
                     continued = False
                     current_y = input_y
@@ -168,10 +165,10 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     white_note = False
                                     break
                     most_right = current_x
-                    if most_right - most_left < difference_between_lines or most_right - most_left > difference_between_lines * 1.5:
-                        white_note = False                
 
-                    if white_note:
+
+                    #think it's in here
+                    if most_right - most_left < difference_between_lines or most_right - most_left > difference_between_lines * 1.5:
 
 
                         img2 = Image.open('new_input/page_1.png').convert("L")  # Convert to grayscale
@@ -181,6 +178,11 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                         img_array2[input_y: input_y + 50, x_index - round(difference_between_blacks / 2): x_index - round(difference_between_blacks / 2) + 50] = 50
                         img2 = Image.fromarray(img_array2)
                         img2.save('new_input/page_1.png')
+
+
+
+                        white_note = False                                    
+
                     #this is just seeing the left and right at input y
                     left = -1
                     right = -1
