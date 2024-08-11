@@ -182,6 +182,7 @@ def extract_highlighted_lines_and_columns_from_image_took_out(image_path, thresh
     
 def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, threshold=2/3):
     global all_rows
+
     open_pdf_into_input(pdf_path, input_folder, new_input)
 
     # Load the image
