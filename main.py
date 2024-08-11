@@ -1,7 +1,3 @@
-#NEW INPUT NOT UPDATING FOR SOME REASON ---- CHECK OUT THE WHITE NOte CHANGED DIRECTION EXTRA LOGIC
-#OTHER THAN THAT GOING GREAT!
-
-
 from return_notes import return_notes
 
 from PIL import Image, ImageDraw

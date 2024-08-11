@@ -36,14 +36,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                     if above and below and counter < difference_between_lines_for_line_drawing * 3 / 4:
                         break
                     counter += 1
-                
-
-                #this is going across and then up and down 
                 if white_note:
-                    
-                    #past here
-
-
                     first = -1
                     middle = -1
                     start = x_index - difference_between_blacks
@@ -186,8 +179,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                 break
                         if right == -1:
                             white_note = False
-
-
                     if white_note:
                         went_here = False
                         past_temp_y_above = -1
@@ -398,10 +389,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
         if pixel != 255 and x_index != width - 1:
             black_count += 1
         elif black_count >= difference_between_lines_for_line_drawing * 1.15 and black_count < difference_between_lines_for_line_drawing * 5:
-
-
-
-            
+     
             changed_direction_above = 0
             changed_direction_below = 0
 
@@ -819,10 +807,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
 
             else:
                 white_note = True
-
-
-
-                
 
                 #dashed white notes
                 max_above = -1
