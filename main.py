@@ -1,3 +1,8 @@
+#this whole line / 2 and 0.333333 is a very precarious thing
+#i want to bring the number down keep it simple and also implement logic of average difference between lines and outliers get booted
+
+
+
 from return_notes import return_notes
 
 from PIL import Image, ImageDraw
@@ -95,7 +100,7 @@ def extract_highlighted_lines_and_columns_from_image_took_out(image_path, thresh
         # Count non-white (in grayscale, white is 255) pixels in the row
         non_white_pixels = np.sum(row != 255)
         # Highlight the row if the count exceeds the threshold
-        if non_white_pixels > (threshold * width):
+        if non_white_pixels > (threshold * width / 2):
             img_array[row_index: row_index + 1, 0: width] = 255
             if start_line == -1:
                 start_line = row_index
@@ -200,7 +205,7 @@ def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, thresho
         # Count non-white (in grayscale, white is 255) pixels in the row
         non_white_pixels = np.sum(row != 255)
         # Highlight the row if the count exceeds the threshold
-        if non_white_pixels > (threshold * width):
+        if non_white_pixels > (threshold * width / 2):
             if start_line == -1:
                 start_line = row_index
         else:
@@ -312,7 +317,7 @@ def find_and_combine_extra(arr1, arr2):
     return result
 
 # Example usage
-pdf_path = "input.pdf"
+pdf_path = "testingnewinput.pdf"
 input_folder = "input"
 new_input = 'new_input'
 
