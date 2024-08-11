@@ -1,4 +1,5 @@
 #fix the notes that aren't working!
+#somehow for the dashed white that dot is fucking both of them up idk why
 
 from return_notes import return_notes
 
@@ -17,9 +18,6 @@ parser = argparse.ArgumentParser()
 parser.add_argument("inputfolder", help="Input Folder", nargs='?', default="input")
 
 args = parser.parse_args()
-
-# Threshold for line to be considered as an initial staff line #
-threshold = 0.6
 
 all_rows = []
 

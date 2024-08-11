@@ -95,6 +95,10 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     temp_x_right -= 1
                                 if right_flag == False:
                                     white_note = False
+                    
+                    #after this
+                                    
+
                     #bottom left
                     continued = False
                     current_y = input_y
@@ -166,6 +170,17 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                     most_right = current_x
                     if most_right - most_left < difference_between_lines or most_right - most_left > difference_between_lines * 1.5:
                         white_note = False                
+
+                    if white_note:
+
+
+                        img2 = Image.open('new_input/page_1.png').convert("L")  # Convert to grayscale
+
+                        # Convert the PIL Image to a NumPy array
+                        img_array2 = np.array(img2)
+                        img_array2[input_y: input_y + 50, x_index - round(difference_between_blacks / 2): x_index - round(difference_between_blacks / 2) + 50] = 50
+                        img2 = Image.fromarray(img_array2)
+                        img2.save('new_input/page_1.png')
                     #this is just seeing the left and right at input y
                     left = -1
                     right = -1
@@ -910,7 +925,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                         temporary_x += 1
 
                 distance_above = ending_of_space_above_inside - starting_of_space_above_inside + 1
-
+               
                 if white_note:
                     if distance_above < (difference_between_lines / 3) or distance_above > (difference_between_lines):
                         white_note = False
