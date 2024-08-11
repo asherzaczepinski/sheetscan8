@@ -1,6 +1,5 @@
 #fix the notes that aren't working!
-#the lines r fine rn
-#WTFFF IS HAPPENING NOW ITS NOT OPENING THE PDF SHIT
+
 from return_notes import return_notes
 
 from PIL import Image, ImageDraw
@@ -337,7 +336,7 @@ new_input = 'new_input'
 
 
 #need to open this somehow
-open_pdf_into_input(pdf_path, input_folder, new_input, image_path)
+open_pdf_into_input(pdf_path, input_folder, new_input)
 
 for filename in os.listdir(input_folder):
     if filename.endswith(".png") or filename.endswith(".jpg"):
