@@ -1,12 +1,6 @@
-#this whole line / 2 and 0.333333 is a very precarious thing
-#i want to bring the number down keep it simple and also implement logic of average difference between lines and outliers get booted
-
-#0.3333 is different than 0.3
-
-#do this rn
-
-#startline is almost like the top of the line
-
+#fix the notes that aren't working!
+#the lines r fine rn
+#WTFFF IS HAPPENING NOW ITS NOT OPENING THE PDF SHIT
 from return_notes import return_notes
 
 from PIL import Image, ImageDraw
@@ -79,7 +73,7 @@ def y_assigner(y_array, y):
     else:
         return before    
 
-def extract_highlighted_lines_and_columns_from_image_took_out(image_path, threshold=2/3):
+def extract_highlighted_lines_and_columns_from_image_took_out(pdf_path, input_folder, new_input, image_path):
     global all_rows
     open_pdf_into_input(pdf_path, input_folder, new_input)
 
@@ -102,14 +96,21 @@ def extract_highlighted_lines_and_columns_from_image_took_out(image_path, thresh
 
     for row_index, row in enumerate(img_array):
         # Count non-white (in grayscale, white is 255) pixels in the row
-        non_white_pixels = np.sum(row != 255)
-        # Highlight the row if the count exceeds the threshold
-        if non_white_pixels > (threshold * width / 2):
+        consecutive = 0
+        found_row = False
+        for temp_x_index in range (width):
+            temp_pixel = img_array[row_index, temp_x_index]
+            if temp_pixel != 255:
+                consecutive += 1
+            else:
+                consecutive = 0
+            if consecutive > 0.3 * width:
+                found_row = True
+        if found_row:
             img_array[row_index: row_index + 1, 0: width] = 255
             if start_line == -1:
                 start_line = row_index
         else:
-            # If a line was started previously, add it to the list
             if start_line != -1:
                 lines.append([0, start_line, width, row_index])
                 start_line = -1  # Reset start_line
@@ -185,7 +186,7 @@ def extract_highlighted_lines_and_columns_from_image_took_out(image_path, thresh
     #only return the extra stuff here bc this looks at everything so it feels better
     return new_notes, sorted_middles, difference_between_lines_for_line_drawing
     
-def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, threshold=2/3):
+def extract_highlighted_lines_and_columns_from_image_kept_in(pdf_path, input_folder, new_input, image_path):
     global all_rows
 
     open_pdf_into_input(pdf_path, input_folder, new_input)
@@ -207,17 +208,25 @@ def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, thresho
 
     for row_index, row in enumerate(img_array):
         # Count non-white (in grayscale, white is 255) pixels in the row
-        non_white_pixels = np.sum(row != 255)
-        # Highlight the row if the count exceeds the threshold
-        if non_white_pixels > (threshold * width / 2):
+        consecutive = 0
+        found_row = False
+        for temp_x_index in range (width):
+            temp_pixel = img_array[row_index, temp_x_index]
+            if temp_pixel != 255:
+                consecutive += 1
+            else:
+                consecutive = 0
+            if consecutive > 0.3 * width:
+                found_row = True
+        if found_row:
             if start_line == -1:
                 start_line = row_index
         else:
-            # If a line was started previously, add it to the list
             if start_line != -1:
                 lines.append([0, start_line, width, row_index])
                 start_line = -1  # Reset start_line
-    #theres going to be way too many lines  this way
+  
+    #theres going to be way too many lines this way
     #replace the part we took out
     for row in lines:
         upper_line_y = row[1] - 1
@@ -325,12 +334,16 @@ pdf_path = "testingnewinput.pdf"
 input_folder = "input"
 new_input = 'new_input'
 
-#to debug this we can try to see it proces both pages seperately from some old commits but literally it is showing it has everything there i think it is a probelm with combine
+
+
+#need to open this somehow
+open_pdf_into_input(pdf_path, input_folder, new_input, image_path)
+
 for filename in os.listdir(input_folder):
     if filename.endswith(".png") or filename.endswith(".jpg"):
         try:
-
             image_path = os.path.join(input_folder, filename)
+
             new_image_path = os.path.join(new_input, filename)
             # Load the image
             img = Image.open(image_path).convert("L")  # Convert to grayscale
@@ -338,9 +351,9 @@ for filename in os.listdir(input_folder):
             # Convert the PIL Image to a NumPy array
             img_array = np.array(img)
 
-            took_out, sorted_middles, difference_between_lines_for_line_drawing = extract_highlighted_lines_and_columns_from_image_took_out(image_path)
+            took_out, sorted_middles, difference_between_lines_for_line_drawing = extract_highlighted_lines_and_columns_from_image_took_out(pdf_path, input_folder, new_input, image_path)
 
-            kept_in = extract_highlighted_lines_and_columns_from_image_kept_in(image_path)
+            kept_in = extract_highlighted_lines_and_columns_from_image_kept_in(pdf_path, input_folder, new_input, image_path)
 
             notes = find_and_combine_extra(took_out, kept_in)
             
