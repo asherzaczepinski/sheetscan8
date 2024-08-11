@@ -1,7 +1,11 @@
 #this whole line / 2 and 0.333333 is a very precarious thing
 #i want to bring the number down keep it simple and also implement logic of average difference between lines and outliers get booted
 
+#0.3333 is different than 0.3
 
+#do this rn
+
+#startline is almost like the top of the line
 
 from return_notes import return_notes
 
@@ -213,7 +217,7 @@ def extract_highlighted_lines_and_columns_from_image_kept_in(image_path, thresho
             if start_line != -1:
                 lines.append([0, start_line, width, row_index])
                 start_line = -1  # Reset start_line
-
+    #theres going to be way too many lines  this way
     #replace the part we took out
     for row in lines:
         upper_line_y = row[1] - 1
