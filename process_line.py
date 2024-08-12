@@ -290,12 +290,16 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
 
 
 
+                                #ITs right in here with the first middle shit ik what wrong let me fix it rn tho
+                                            
 
+
+                                #work on improving this here and figure out the reason its not working great
                                 if normal_white:
                                     #IN HERE IS WHERE THE ISSUE IS
                                     if temp_y_below >= max_below:
                                         max_below = temp_y_below
-                                    """ if new_x_index == start:
+                                    if new_x_index == start:
                                         first = round((temp_y_above + temp_y_below) / 2)
                                     elif new_x_index == round((start + end) / 2):
                                         middle = round((temp_y_above + temp_y_below) / 2)
@@ -320,7 +324,16 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                             img_array2[input_y: input_y + 100, x_index - round(difference_between_blacks / 2): x_index - round(difference_between_blacks / 2) + 100] = 50
                                             img2 = Image.fromarray(img_array2)
                                             img2.save('new_input/page_1.png')
-                                            break         """
+                                            break      
+
+
+
+
+
+
+
+
+
                                     if abs((past_temp_y_above - temp_y_above) - (temp_y_below - past_temp_y_below)) < difference_between_lines / 10 and past_temp_y_above - temp_y_above >= 0 and temp_y_below - past_temp_y_below >= 0:
                                         past_temp_y_above = temp_y_above
                                         past_temp_y_below = temp_y_below
