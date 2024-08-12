@@ -102,6 +102,9 @@ def extract_highlighted_lines_and_columns_from_image_took_out(pdf_path, input_fo
     # Variable to track the start of a line
     start_line = -1
 
+
+
+    #edited out the tookout logic to take out oneline above for that light layer above!!!!
     for row_index, row in enumerate(img_array):
         # Count non-white (in grayscale, white is 255) pixels in the row
         consecutive = 0
@@ -115,7 +118,7 @@ def extract_highlighted_lines_and_columns_from_image_took_out(pdf_path, input_fo
             if consecutive > 0.3 * width:
                 found_row = True
         if found_row:
-            img_array[row_index: row_index + 1, 0: width] = 255
+            img_array[row_index - 1: row_index + 1, 0: width] = 255
             if start_line == -1:
                 start_line = row_index
         else:
