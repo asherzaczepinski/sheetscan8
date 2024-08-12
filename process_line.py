@@ -10,8 +10,8 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
     #white notes
 
 
-    img2 = Image.open('new_input/page_1.png').convert("L")  # Convert to grayscale
-    img_array2 = np.array(img2)
+    """ img2 = Image.open('new_input/page_1.png').convert("L")  # Convert to grayscale
+    img_array2 = np.array(img2) """
 
 
     for x_index in range(width):
@@ -440,27 +440,29 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                         
                                 
 
-                        #before this
-                        if white_note:
-                            img_array2[input_y: input_y + 50, x_index - round(difference_between_blacks / 2):  x_index - round(difference_between_blacks / 2) + 50] = 50
-
+                        #one of them is after this
+                        
                         if went_here:
                             white_note = False
                             if changed_direction_above == 2 or changed_direction_below == 2:
                                 white_note = True
 
+                        #one of them is after this!!!
+                                
+                        """ 
+
                         #my guess is it has something to do with this now bc it is super close bc the top extends over!!!
                         if white_note:
                             #little /5 cuz it is not all the way
-                            if max_above > input_y - round(difference_between_lines / 10):
+                            if max_above > input_y - round(difference_between_lines / 20):
                                 white_note = False
                             if white_note:
-                                if max_below < input_y + round(difference_between_lines / 10):
-                                    white_note = False
+                                if max_below < input_y + round(difference_between_lines / 20):
+                                    white_note = False """
                             #overall height check
-                            if white_note:
-                                if max_below - max_above > difference_between_lines_for_line_drawing + line_height * 2:
-                                    white_note = False
+                        if white_note:
+                            if max_below - max_above > difference_between_lines_for_line_drawing + line_height * 2:
+                                white_note = False
                         if white_note:
                             top_left = [left - 5, input_y - 10]
                             bottom_right = [right + 5, input_y + 10]   
@@ -471,10 +473,10 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
             #if it's white
             if difference_between_blacks != -1:
                 difference_between_blacks += 1
-    
+    """  
     img2 = Image.fromarray(img_array2)
     img2.save('new_input/page_1.png')  
-
+   """
 
 
 
