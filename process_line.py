@@ -28,6 +28,7 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                     if counter > difference_between_lines_for_line_drawing * 3 / 4:
                         #breaking around here
                         white_note = False
+                        
                         break
                     if temp_pixel_above != 255:
                         above = True
@@ -246,13 +247,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                             #in here this time!!!!!
                                 
                             if white_note:
-                                """ img2 = Image.open('new_input/page_1.png').convert("L")  # Convert to grayscale
-
-                                # Convert the PIL Image to a NumPy array
-                                img_array2 = np.array(img2)
-                                img_array2[input_y: input_y + 50, x_index - round(difference_between_blacks / 2): x_index - round(difference_between_blacks / 2) + 50] = 50
-                                img2 = Image.fromarray(img_array2)
-                                img2.save('new_input/page_1.png') """
                                 if temp_y_above <= max_above or max_above == -1:
                                     max_above = temp_y_above
                                 while True:
@@ -264,14 +258,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     if continued:
                                         break
                                     if temp_y_below >= input_y + round(difference_between_lines_for_line_drawing * 3 / 4):
-
-
-
-
-                                        
-
-
-
                                         white_note = False
                                         break
                                     temp_pixel_below = img_array[temp_y_below, new_x_index]      
@@ -309,34 +295,32 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                     #IN HERE IS WHERE THE ISSUE IS
                                     if temp_y_below >= max_below:
                                         max_below = temp_y_below
-                                    if new_x_index == start:
+                                    """ if new_x_index == start:
                                         first = round((temp_y_above + temp_y_below) / 2)
                                     elif new_x_index == round((start + end) / 2):
                                         middle = round((temp_y_above + temp_y_below) / 2)
                                         if first - middle < int(difference_between_lines / 10):
                                             white_note = False
-                                            """ if white_note:
-                                                img2 = Image.open('new_input/page_1.png').convert("L")  # Convert to grayscale
+                                            img2 = Image.open('new_input/page_1.png').convert("L")  # Convert to grayscale
 
-                                                # Convert the PIL Image to a NumPy array
-                                                img_array2 = np.array(img2)
-                                                img_array2[input_y: input_y + 50, x_index - round(difference_between_blacks / 2): x_index - round(difference_between_blacks / 2) + 50] = 50
-                                                img2 = Image.fromarray(img_array2)
-                                                img2.save('new_input/page_1.png') """
+                                            # Convert the PIL Image to a NumPy array
+                                            img_array2 = np.array(img2)
+                                            img_array2[input_y: input_y + 100, x_index - round(difference_between_blacks / 2): x_index - round(difference_between_blacks / 2) + 100] = 50
+                                            img2 = Image.fromarray(img_array2)
+                                            img2.save('new_input/page_1.png')
                                             break
                                     elif new_x_index == end - 1:
                                         ending = round((temp_y_above + temp_y_below) / 2)
                                         if middle - ending < int(difference_between_lines / 10):
                                             white_note = False
-                                            """ if white_note:
-                                                img2 = Image.open('new_input/page_1.png').convert("L")  # Convert to grayscale
+                                            img2 = Image.open('new_input/page_1.png').convert("L")  # Convert to grayscale
 
-                                                # Convert the PIL Image to a NumPy array
-                                                img_array2 = np.array(img2)
-                                                img_array2[input_y: input_y + 50, x_index - round(difference_between_blacks / 2): x_index - round(difference_between_blacks / 2) + 50] = 50
-                                                img2 = Image.fromarray(img_array2)
-                                                img2.save('new_input/page_1.png') """
-                                            break        
+                                            # Convert the PIL Image to a NumPy array
+                                            img_array2 = np.array(img2)
+                                            img_array2[input_y: input_y + 100, x_index - round(difference_between_blacks / 2): x_index - round(difference_between_blacks / 2) + 100] = 50
+                                            img2 = Image.fromarray(img_array2)
+                                            img2.save('new_input/page_1.png')
+                                            break         """
                                     if abs((past_temp_y_above - temp_y_above) - (temp_y_below - past_temp_y_below)) < difference_between_lines / 10 and past_temp_y_above - temp_y_above >= 0 and temp_y_below - past_temp_y_below >= 0:
                                         past_temp_y_above = temp_y_above
                                         past_temp_y_below = temp_y_below
@@ -344,20 +328,10 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         past_temp_y_above = temp_y_above
                                         past_temp_y_below = temp_y_below
                                     else:
-
-
-                                        #not in here
                                         white_note = False
                                         break
 
-                                    if white_note:
-                                        img2 = Image.open('new_input/page_1.png').convert("L")  # Convert to grayscale
-
-                                        # Convert the PIL Image to a NumPy array
-                                        img_array2 = np.array(img2)
-                                        img_array2[input_y: input_y + 100, x_index - round(difference_between_blacks / 2): x_index - round(difference_between_blacks / 2) + 100] = 50
-                                        img2 = Image.fromarray(img_array2)
-                                        img2.save('new_input/page_1.png')
+                                    
                                 else:
                                     #not in here
                                     went_here = True
@@ -451,21 +425,12 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
 
 
                         #before this
-                        """ if white_note:
-                            img2 = Image.open('new_input/page_1.png').convert("L")  # Convert to grayscale
-
-                            # Convert the PIL Image to a NumPy array
-                            img_array2 = np.array(img2)
-                            img_array2[input_y: input_y + 50, x_index - round(difference_between_blacks / 2): x_index - round(difference_between_blacks / 2) + 50] = 50
-                            img2 = Image.fromarray(img_array2)
-                            img2.save('new_input/page_1.png') """
+                       
                         if went_here:
                             white_note = False
                             if changed_direction_above == 2 or changed_direction_below == 2:
                                 white_note = True
 
-
-                        #before here 
                         if white_note:
                             #little /5 cuz it is not all the way
                             if max_above > input_y - round(difference_between_lines / 10):
@@ -476,7 +441,6 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                             #overall height check
                             if white_note:
                                 if max_below - max_above > difference_between_lines_for_line_drawing + line_height * 2:
-                                    #not here
                                     white_note = False
                         if white_note:
                             top_left = [left - 5, input_y - 10]
