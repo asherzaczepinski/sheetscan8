@@ -9,6 +9,9 @@
 
 
 #keep grinding
+
+
+#make a check for lines incase crescendos fuck things up
 from return_notes import return_notes
 
 from PIL import Image, ImageDraw

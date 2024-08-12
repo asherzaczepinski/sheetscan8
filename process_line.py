@@ -295,6 +295,16 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
 
 
                                 #work on improving this here and figure out the reason its not working great
+                                            
+
+                                #they were abs it didn't make a difference
+                                #direction wise it's fine they're just tinier
+                                            
+
+                                #our issue here is it is not basing it off of the top one value or another but instead the both
+                                #really averaging out the same
+                                            
+                                #concise down which one it is and keepworking
                                 if normal_white:
                                     #IN HERE IS WHERE THE ISSUE IS
                                     if temp_y_below >= max_below:
