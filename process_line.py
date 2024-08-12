@@ -240,9 +240,9 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                 if temp_pixel_above != 255:
 
 
-
+                                    """ 
                                     #testing where its ending up the issue for those white notes below is it the top is not chanigng
-                                    img_array2[temp_y_above, new_x_index] = 50
+                                    img_array2[temp_y_above, new_x_index] = 50 """
                                     break
                                 temp_y_above -= 1   
                             
@@ -323,18 +323,18 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                         max_below = temp_y_below
                                     if new_x_index == start:
                                         first = round((temp_y_above + temp_y_below) / 2)
-                                        img_array2[temp_y_above: temp_y_above + 5, start] = 50
+                                        #img_array2[temp_y_above: temp_y_above + 5, start] = 50
                                     elif new_x_index == round((start + end) / 2):
                                         middle = round((temp_y_above + temp_y_below) / 2)
                                         if first - middle < int(difference_between_lines / 10):
                                             white_note = False
-                                            img_array2[temp_y_above: temp_y_above + 5, round((start + end) / 2)] = 50
+                                            #img_array2[temp_y_above: temp_y_above + 5, round((start + end) / 2)] = 50
                                             break
                                     elif new_x_index == end - 1:
                                         ending = round((temp_y_above + temp_y_below) / 2)
                                         if middle - ending < int(difference_between_lines / 10):
                                             white_note = False
-                                            img_array2[temp_y_above: temp_y_above + 5, end - 1] = 50
+                                            #img_array2[temp_y_above: temp_y_above + 5, end - 1] = 50
                                             break      
 
                                     if abs((past_temp_y_above - temp_y_above) - (temp_y_below - past_temp_y_below)) < difference_between_lines / 10 and past_temp_y_above - temp_y_above >= 0 and temp_y_below - past_temp_y_below >= 0:
@@ -441,12 +441,15 @@ def process_line(input_y, img_array, width, difference_between_lines_for_line_dr
                                 
 
                         #before this
-                       
+                        if white_note:
+                            img_array2[input_y: input_y + 50, x_index - round(difference_between_blacks / 2):  x_index - round(difference_between_blacks / 2) + 50] = 50
+
                         if went_here:
                             white_note = False
                             if changed_direction_above == 2 or changed_direction_below == 2:
                                 white_note = True
 
+                        #my guess is it has something to do with this now bc it is super close bc the top extends over!!!
                         if white_note:
                             #little /5 cuz it is not all the way
                             if max_above > input_y - round(difference_between_lines / 10):

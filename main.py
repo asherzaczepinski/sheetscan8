@@ -12,6 +12,11 @@
 
 
 #make a check for lines incase crescendos fuck things up
+
+
+
+#we fixed it up now there are more errors!!!!!
+#keep grinding on the whit enotes!
 from return_notes import return_notes
 
 from PIL import Image, ImageDraw
@@ -103,28 +108,48 @@ def extract_highlighted_lines_and_columns_from_image_took_out(pdf_path, input_fo
     start_line = -1
 
 
+    """ img2 = Image.open('new_input/page_1.png').convert("L")  # Convert to grayscale
+    img_array2 = np.array(img2) """
 
-    #edited out the tookout logic to take out oneline above for that light layer above!!!!
+
+
+    
+    #do something where it can go up to width / 100 for space between --- this will make the logic solid
     for row_index, row in enumerate(img_array):
         # Count non-white (in grayscale, white is 255) pixels in the row
         consecutive = 0
+        waiting = 0
         found_row = False
         for temp_x_index in range (width):
             temp_pixel = img_array[row_index, temp_x_index]
             if temp_pixel != 255:
                 consecutive += 1
-            else:
+            elif waiting > width / 50:
+                #see when it hits here!!!
+                """ if consecutive > width / 10:
+                    img_array2[row_index: row_index + 50, temp_x_index: temp_x_index + 50] = 50 """
                 consecutive = 0
+                waiting = 0
+                
+            else: 
+                waiting += 1
+                consecutive += 1
             if consecutive > 0.3 * width:
                 found_row = True
+                break
         if found_row:
-            img_array[row_index - 1: row_index + 1, 0: width] = 255
+            img_array[row_index: row_index + 1, 0: width] = 255
             if start_line == -1:
                 start_line = row_index
         else:
             if start_line != -1:
                 lines.append([0, start_line, width, row_index])
                 start_line = -1  # Reset start_line
+
+
+
+    """ img2 = Image.fromarray(img_array2)
+    img2.save('new_input/page_1.png')  """
 
     #replace the part we took out
     for row in lines:
